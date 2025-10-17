@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nyvaris Eltarius</title>
+
+  <!-- Police Star Wars style -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #00baff; /* bleu holographique */
+      background-image: radial-gradient(circle at center, rgba(0, 40, 80, 0.4) 0%, rgba(0, 0, 0, 1) 80%);
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    /* Effet d'étoiles en mouvement */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+      animation: starfield 60s linear infinite;
+      opacity: 0.3;
+      z-index: -2;
+    }
+
+    @keyframes starfield {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50%, -50%); }
+    }
+
+    /* Effet de lueurs */
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 8px #00baff, 0 0 20px #0080ff, 0 0 40px #0050ff; }
+      50% { text-shadow: 0 0 4px #00baff, 0 0 10px #0080ff, 0 0 20px #0050ff; }
+    }
+
+    #loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    #logo {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 100px;
+      filter: drop-shadow(0 0 10px #ffd700); /* lueur dorée */
+    }
+
+    #title {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: #ffd700; /* doré */
+      animation: glow 2s infinite;
+    }
+
+    #subtitle {
+      font-size: 22px;
+      margin-bottom: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00baff;
+      animation: typing 4s steps(60, end), blink .75s step-end infinite;
+    }
+
+    #loading-info {
+      position: absolute;
+      bottom: 30px;
+      font-size: 18px;
+      color: #ffffff;
+      text-shadow: 0 0 5px #00baff;
+    }
+
+    #loading-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: -1;
+      filter: brightness(0.7) saturate(1.2);
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent }
+      50% { border-color: #00baff }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading-container">
+    <img id="loading-image" src="image1.png" alt="Chargement..." />
+    <img id="logo" src="enclave_logo.png" alt="Logo Enclave" />
+    <div id="title">Nyvaris Eltarius</div>
+    <div id="subtitle">[Initialisation du centre de commandement d'Aquis Prime]</div>
+    <div id="loading-info">Synchronisation avec le Haut Commandement : Aquis Prime...</div>
+  </div>
+
+  <audio id="background-audio" loop>
+    <source src="enclave_theme.mp3" type="audio/mp3">
+  </audio>
+
+  <audio id="terminal-beep" preload="auto">
+    <source src="terminal_beep.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const images = ["image1.png", "image2.png", "image3.png", "image4.png"];
+    const imageElement = document.getElementById("loading-image");
+    const audio = document.getElementById("background-audio");
+    const beep = document.getElementById("terminal-beep");
+    let current = 0;
+
+    setTimeout(() => {
+      audio.volume = 0.05;
+      audio.play();
+    }, 2000);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      beep.volume = 0.2;
+      beep.play();
+    });
+
+    function cycleImages() {
+      imageElement.style.opacity = 0;
+      setTimeout(() => {
+        current = (current + 1) % images.length;
+        imageElement.src = images[current];
+        imageElement.onload = () => {
+          imageElement.style.opacity = 0.6;
+        };
+      }, 1500);
+    }
+
+    setInterval(cycleImages, 6000);
+  </script>
+</body>
+</html>
+
+
+
+
