@@ -107,19 +107,19 @@
       border-right: 2px solid #ff3c3c;
       white-space: nowrap;
       overflow: hidden;
-      width: 0;
+      display: inline-block;
       margin-top: 15px;
-      animation: typing 5s steps(60, end) forwards, blink .75s step-end infinite;
+      animation: typing 8s steps(100, end) forwards, blink .75s step-end infinite;
     }
 
     @keyframes typing {
-      from { width: 0 }
-      to { width: 700px; }
+      from { width: 0; }
+      to { width: 100%; }
     }
 
     @keyframes blink {
-      0%, 100% { border-color: transparent }
-      50% { border-color: #ff3c3c }
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #ff3c3c; }
     }
 
     /* Texte en bas : progression / statut */
@@ -139,24 +139,24 @@
       50% { opacity: 0.7; }
     }
 
-    /* Petit cadre holographique */
+    /* Cadre holographique rouge */
     #frame {
       position: absolute;
       top: 10%;
       left: 10%;
       right: 10%;
       bottom: 10%;
-      border: 1px solid rgba(255,0,0,0.4);
-      box-shadow: inset 0 0 25px rgba(255,0,0,0.2);
+      border: 2px solid rgba(255,0,0,0.8);
+      box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4);
       border-radius: 10px;
       animation: scanlines 1.2s infinite linear;
-      z-index: 0;
+      z-index: 1; /* au-dessus de la vidéo mais derrière le texte */
     }
 
     @keyframes scanlines {
-      0% { box-shadow: inset 0 0 25px rgba(255,0,0,0.3); }
-      50% { box-shadow: inset 0 0 40px rgba(255,0,0,0.5); }
-      100% { box-shadow: inset 0 0 25px rgba(255,0,0,0.3); }
+      0% { box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4); }
+      50% { box-shadow: 0 0 35px rgba(255,0,0,0.9), inset 0 0 35px rgba(255,0,0,0.6); }
+      100% { box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4); }
     }
   </style>
 </head>
@@ -170,7 +170,7 @@
 
     <img id="logo" src="enclave_logo.png" alt="Logo Enclave" />
     <div id="title">POING DE VADOR</div>
-    <div id="subtitle">[ Initialisation du centre de commandement impérial... ]</div>
+    <div id="subtitle">[ Initialisation du Centre de Commandement Impérial... ]</div>
     <div id="loading-info">Connexion au réseau tactique de Coruscant...</div>
   </div>
 
@@ -198,4 +198,3 @@
   </script>
 </body>
 </html>
-
