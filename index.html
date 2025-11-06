@@ -9,9 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* =====================
-       STYLE GÉNÉRAL
-    ====================== */
     body {
       margin: 0;
       padding: 0;
@@ -23,7 +20,6 @@
       background-image: radial-gradient(circle at 20% 20%, #220000 0%, #000 70%);
     }
 
-    /* Fond animé de type "hyperespace" / "étoiles" */
     body::before {
       content: "";
       position: absolute;
@@ -40,7 +36,6 @@
       to { transform: translate(-50%,-50%); }
     }
 
-    /* Overlay rouge holographique */
     body::after {
       content: "";
       position: fixed;
@@ -51,9 +46,6 @@
       z-index: -2;
     }
 
-    /* =====================
-       CONTENEUR PRINCIPAL
-    ====================== */
     #loading-container {
       display: flex;
       flex-direction: column;
@@ -65,7 +57,6 @@
       z-index: 5;
     }
 
-    /* Logo du Poing de Vador */
     #logo {
       position: absolute;
       top: 40px;
@@ -74,8 +65,8 @@
       filter: drop-shadow(0 0 15px #ff0000);
     }
 
-    /* GIF de fond */
-    #loading-gif {
+    /* VIDEO DE FOND */
+    #background-video {
       position: absolute;
       top: 0; left: 0;
       width: 100vw;
@@ -83,11 +74,9 @@
       object-fit: cover;
       z-index: -1;
       filter: brightness(0.4) contrast(1.2) saturate(1.4);
-      opacity: 0.8;
-      transition: opacity 1s ease-in-out;
+      opacity: 0.85;
     }
 
-    /* Titre principal */
     #title {
       font-size: 64px;
       text-transform: uppercase;
@@ -102,7 +91,6 @@
       20%, 24%, 55% { opacity: 0.6; }
     }
 
-    /* Sous-titre (effet terminal de commandement) */
     #subtitle {
       font-size: 22px;
       color: #ff3c3c;
@@ -124,7 +112,6 @@
       50% { border-color: #ff3c3c; }
     }
 
-    /* Texte en bas : progression / statut */
     #loading-info {
       position: absolute;
       bottom: 40px;
@@ -141,18 +128,14 @@
       50% { opacity: 0.7; }
     }
 
-    /* Cadre holographique rouge */
     #frame {
       position: absolute;
-      top: 10%;
-      left: 10%;
-      right: 10%;
-      bottom: 10%;
+      top: 10%; left: 10%; right: 10%; bottom: 10%;
       border: 2px solid rgba(255,0,0,0.8);
       box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4);
       border-radius: 10px;
       animation: scanlines 1.2s infinite linear;
-      z-index: 1; /* au-dessus du GIF mais derrière le texte */
+      z-index: 1;
     }
 
     @keyframes scanlines {
@@ -163,11 +146,14 @@
   </style>
 </head>
 <body>
+  <video id="background-video" autoplay loop muted>
+    <source src="video_loading.webm" type="video/webm">
+  </video>
+
   <div id="frame"></div>
   <div id="loading-container">
-    <img id="loading-gif" src="empire_intro.gif" alt="GIF de fond" />
-
     <img id="logo" src="enclave_logo.png" alt="Logo Enclave" />
+
     <div id="title">Destinée Impériale</div>
     <div id="subtitle">[ Initialisation du Centre de Commandement Impérial https://discord.gg/QR4FbcmegE ]</div>
     <div id="loading-info">Connexion au réseau tactique de Coruscant : https://discord.gg/QR4FbcmegE</div>
@@ -185,7 +171,6 @@
     const audio = document.getElementById("background-audio");
     const beep = document.getElementById("terminal-beep");
 
-    // Lecture audio avec léger délai
     setTimeout(() => {
       audio.volume = 0.05;
       audio.play();
@@ -195,21 +180,6 @@
       beep.volume = 0.2;
       beep.play();
     });
-
-    // Si tu veux faire défiler plusieurs GIFs :
-    /*
-    const gifs = ["empire_intro.gif", "empire_loop.gif"];
-    const gifElement = document.getElementById("loading-gif");
-    let current = 0;
-    setInterval(() => {
-      current = (current + 1) % gifs.length;
-      gifElement.src = gifs[current];
-    }, 6000);
-    */
   </script>
 </body>
 </html>
-
-
-
-
