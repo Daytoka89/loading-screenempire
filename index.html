@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Centralist United States | Apo-Serious RP | PVE</title>
 
-  <!-- Police techno/militaire -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -17,33 +16,18 @@
       font-family: 'Orbitron', sans-serif;
       color: #ff2a2a;
       background-color: #000;
-      background-image: radial-gradient(circle at 20% 20%, #220000 0%, #000 70%);
     }
 
-    body::before {
-      content: "";
+    /* ---- IMAGE DE FOND ---- */
+    #background-image {
       position: absolute;
       top: 0; left: 0;
-      width: 200%; height: 200%;
-      background: url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
-      opacity: 0.2;
-      animation: starScroll 120s linear infinite;
-      z-index: -3;
-    }
-
-    @keyframes starScroll {
-      from { transform: translate(0,0); }
-      to { transform: translate(-50%,-50%); }
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(255,0,0,0.05), rgba(0,0,0,0.9) 90%);
-      mix-blend-mode: overlay;
-      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.45) contrast(1.2) saturate(1.3);
+      transition: opacity 1.5s ease-in-out;
     }
 
     #loading-container {
@@ -63,18 +47,6 @@
       left: 40px;
       width: 110px;
       filter: drop-shadow(0 0 15px #ff0000);
-    }
-
-    /* VIDEO DE FOND */
-    #background-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(0.4) contrast(1.2) saturate(1.4);
-      opacity: 0.85;
     }
 
     #title {
@@ -97,25 +69,16 @@
       border-right: 2px solid #ff3c3c;
       white-space: nowrap;
       overflow: hidden;
-      display: inline-block;
       margin-top: 15px;
-      animation: typing 8s steps(100, end) forwards, blink .75s step-end infinite;
+      animation: typing 8s steps(100) forwards, blink .75s infinite step-end;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: #ff3c3c; }
-    }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink { 0%,100% { border-color: transparent; } 50% { border-color: #ff3c3c; } }
 
     #loading-info {
       position: absolute;
       bottom: 40px;
-      text-transform: uppercase;
       font-size: 18px;
       color: #ff5555;
       letter-spacing: 2px;
@@ -124,36 +87,19 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
+      0%,100% { opacity: 1; }
       50% { opacity: 0.7; }
     }
 
-    #frame {
-      position: absolute;
-      top: 10%; left: 10%; right: 10%; bottom: 10%;
-      border: 2px solid rgba(255,0,0,0.8);
-      box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4);
-      border-radius: 10px;
-      animation: scanlines 1.2s infinite linear;
-      z-index: 1;
-    }
-
-    @keyframes scanlines {
-      0% { box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4); }
-      50% { box-shadow: 0 0 35px rgba(255,0,0,0.9), inset 0 0 35px rgba(255,0,0,0.6); }
-      100% { box-shadow: 0 0 20px rgba(255,0,0,0.6), inset 0 0 25px rgba(255,0,0,0.4); }
-    }
   </style>
 </head>
 <body>
-  <video id="background-video" autoplay loop muted>
-    <source src="video_loading.webm" type="video/webm">
-  </video>
 
-  <div id="frame"></div>
+  <!-- IMAGE DE FOND -->
+  <img id="background-image" src="image1.png" />
+
   <div id="loading-container">
-    <img id="logo" src="enclave_logo.png" alt="Logo Enclave" />
-
+    <img id="logo" src="enclave_logo.png" alt="Logo"/>
     <div id="title">Destinée Impériale</div>
     <div id="subtitle">[ Initialisation du Centre de Commandement Centralist https://discord.gg/QR4FbcmegE ]</div>
     <div id="loading-info">Connexion au réseau tactique de Fort Rids : https://discord.gg/QR4FbcmegE</div>
@@ -168,6 +114,26 @@
   </audio>
 
   <script>
+    /* --- ROTATION DES IMAGES DE FOND --- */
+    const images = [
+      "image1.png",
+      "image2.png",
+      "image3.png"
+    ];
+
+    let index = 0;
+    const bg = document.getElementById("background-image");
+
+    setInterval(() => {
+      bg.style.opacity = 0;
+      setTimeout(() => {
+        index = (index + 1) % images.length;
+        bg.src = images[index];
+        bg.style.opacity = 1;
+      }, 1500);
+    }, 6000); // change toutes les 6 secondes
+
+    /* --- MUSIQUE --- */
     const audio = document.getElementById("background-audio");
     const beep = document.getElementById("terminal-beep");
 
@@ -181,6 +147,6 @@
       beep.play();
     });
   </script>
+
 </body>
 </html>
-
