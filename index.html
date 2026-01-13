@@ -107,17 +107,21 @@ body {
   border: 2px solid #ff0000;
   border-radius: 8px;
   text-align: justify;
+  text-justify: inter-word;
   text-shadow: 0 0 5px #ff0000;
   box-shadow: 0 0 15px #ff0000;
-  overflow: hidden; /* supprime scrollbar */
+  overflow: hidden;
   position: relative;
 }
 
+/* CORRECTION DU DÉBORDEMENT */
 #info-content {
   position: absolute;
-  bottom: -100%; /* commence en bas */
-  width: 100%;
-  animation: scrollText 60s linear infinite; /* durée = 60s, ajuste si nécessaire */
+  bottom: -100%;
+  left: 25px;
+  right: 25px;
+  width: calc(100% - 50px);
+  animation: scrollText 60s linear infinite;
 }
 
 @keyframes scrollText {
@@ -164,19 +168,12 @@ body {
 </audio>
 <script>
   const audio = document.getElementById("background-audio");
-  const beep = document.getElementById("terminal-beep");
 
   setTimeout(() => {
     audio.volume = 0.05;
     audio.play();
   }, 2000);
-
-  window.addEventListener("DOMContentLoaded", () => {
-    beep.volume = 0.2;
-    beep.play();
-  });
 </script>
 
 </body>
 </html>
-
