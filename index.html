@@ -39,6 +39,7 @@
       height: 100vh;
       position: relative;
       z-index: 5;
+      padding: 0 20px;
     }
 
     #logo {
@@ -76,6 +77,38 @@
     @keyframes typing { from { width: 0; } to { width: 100%; } }
     @keyframes blink { 0%,100% { border-color: transparent; } 50% { border-color: #ff3c3c; } }
 
+    /* ---- INFOBOX ---- */
+    #info-box {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 800px;
+      background-color: rgba(0, 0, 0, 0.65);
+      color: #ff6666;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 20px;
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      text-align: justify;
+      text-shadow: 0 0 5px #ff0000;
+      box-shadow: 0 0 15px #ff0000;
+      overflow: hidden;
+      height: 200px; /* fixe la hauteur pour le défilement */
+    }
+
+    #info-text {
+      position: relative;
+      top: 100%;
+      animation: scrollText 50s linear infinite;
+    }
+
+    @keyframes scrollText {
+      0% { top: 100%; }
+      100% { top: -100%; }
+    }
+
     #loading-info {
       position: absolute;
       bottom: 40px;
@@ -90,6 +123,7 @@
       0%,100% { opacity: 1; }
       50% { opacity: 0.7; }
     }
+
   </style>
 </head>
 <body>
@@ -103,6 +137,24 @@
     <img id="logo" src="enclave_logo.png" alt="Logo"/>
     <div id="title">L'Empire Sith</div>
     <div id="subtitle">[ Initialisation du Centre de Commandement Dromund Kaas https://discord.gg/QR4FbcmegE ]</div>
+
+    <!-- INFOBOX -->
+    <div id="info-box">
+      <div id="info-text">
+        <p>
+          Plusieurs mois après le Traité de Coruscant, la paix est désormais rompue.<br>
+          L’Empire Sith a décidé de relancer la guerre en lançant une offensive majeure contre la République Galactique, mettant ainsi un terme définitif à la guerre froide qui opposait les deux puissances.<br><br>
+          Cette déclaration de guerre, précipitée par le Conseil Noir, fait suite à des enquêtes récentes et à des informations alarmantes :<br>
+          L’Ordre Jedi a accompli l’impensable — la création d’un dispositif équivalent à une mini Forge Stellaire, placé sous l’autorité directe du Conseil Jedi.<br>
+          Cette révélation a profondément déstabilisé l’Empire Sith.<br><br>
+          L’Empire Sith s’engage désormais dans une nouvelle ère : celle de la discipline, de l’ordre, de la centralisation du pouvoir et de l’éradication totale des querelles internes.<br>
+          Désormais, l’intellect primera sur la brutalité. La hiérarchie devient absolue : tout rang inférieur devra un respect strict et inconditionnel à ses supérieurs. Seuls les Sith disciplinés, organisés et stratèges s’élèveront dans l’Empire.<br>
+          Les brutes sans vision resteront au bas de l’échelle, là où leur nature les condamne.<br><br>
+          L’Empire s’effondrera-t-il… ou renaîtra-t-il dans le feu et le sang ?
+        </p>
+      </div>
+    </div>
+
     <div id="loading-info">Connexion au réseau tactique de Korriban : https://discord.gg/QR4FbcmegE</div>
   </div>
 
