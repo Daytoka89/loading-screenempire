@@ -80,10 +80,11 @@
     /* ---- INFOBOX ---- */
     #info-box {
       position: absolute;
-      bottom: 100px;
+      bottom: 120px; /* juste au-dessus du loading-info */
       left: 50%;
       transform: translateX(-50%);
       max-width: 800px;
+      max-height: 250px;
       background-color: rgba(0, 0, 0, 0.65);
       color: #ff6666;
       font-size: 16px;
@@ -94,19 +95,8 @@
       text-align: justify;
       text-shadow: 0 0 5px #ff0000;
       box-shadow: 0 0 15px #ff0000;
-      overflow: hidden;
-      height: 200px; /* fixe la hauteur pour le défilement */
-    }
-
-    #info-text {
-      position: relative;
-      top: 100%;
-      animation: scrollText 50s linear infinite;
-    }
-
-    @keyframes scrollText {
-      0% { top: 100%; }
-      100% { top: -100%; }
+      overflow-y: auto; /* permet le scroll si texte trop long */
+      z-index: 6;
     }
 
     #loading-info {
@@ -140,19 +130,17 @@
 
     <!-- INFOBOX -->
     <div id="info-box">
-      <div id="info-text">
-        <p>
-          Plusieurs mois après le Traité de Coruscant, la paix est désormais rompue.<br>
-          L’Empire Sith a décidé de relancer la guerre en lançant une offensive majeure contre la République Galactique, mettant ainsi un terme définitif à la guerre froide qui opposait les deux puissances.<br><br>
-          Cette déclaration de guerre, précipitée par le Conseil Noir, fait suite à des enquêtes récentes et à des informations alarmantes :<br>
-          L’Ordre Jedi a accompli l’impensable — la création d’un dispositif équivalent à une mini Forge Stellaire, placé sous l’autorité directe du Conseil Jedi.<br>
-          Cette révélation a profondément déstabilisé l’Empire Sith.<br><br>
-          L’Empire Sith s’engage désormais dans une nouvelle ère : celle de la discipline, de l’ordre, de la centralisation du pouvoir et de l’éradication totale des querelles internes.<br>
-          Désormais, l’intellect primera sur la brutalité. La hiérarchie devient absolue : tout rang inférieur devra un respect strict et inconditionnel à ses supérieurs. Seuls les Sith disciplinés, organisés et stratèges s’élèveront dans l’Empire.<br>
-          Les brutes sans vision resteront au bas de l’échelle, là où leur nature les condamne.<br><br>
-          L’Empire s’effondrera-t-il… ou renaîtra-t-il dans le feu et le sang ?
-        </p>
-      </div>
+      <p>
+        Plusieurs mois après le Traité de Coruscant, la paix est désormais rompue.<br>
+        L’Empire Sith a décidé de relancer la guerre en lançant une offensive majeure contre la République Galactique, mettant ainsi un terme définitif à la guerre froide qui opposait les deux puissances.<br><br>
+        Cette déclaration de guerre, précipitée par le Conseil Noir, fait suite à des enquêtes récentes et à des informations alarmantes :<br>
+        L’Ordre Jedi a accompli l’impensable — la création d’un dispositif équivalent à une mini Forge Stellaire, placé sous l’autorité directe du Conseil Jedi.<br>
+        Cette révélation a profondément déstabilisé l’Empire Sith.<br><br>
+        L’Empire Sith s’engage désormais dans une nouvelle ère : celle de la discipline, de l’ordre, de la centralisation du pouvoir et de l’éradication totale des querelles internes.<br>
+        Désormais, l’intellect primera sur la brutalité. La hiérarchie devient absolue : tout rang inférieur devra un respect strict et inconditionnel à ses supérieurs. Seuls les Sith disciplinés, organisés et stratèges s’élèveront dans l’Empire.<br>
+        Les brutes sans vision resteront au bas de l’échelle, là où leur nature les condamne.<br><br>
+        L’Empire s’effondrera-t-il… ou renaîtra-t-il dans le feu et le sang ?
+      </p>
     </div>
 
     <div id="loading-info">Connexion au réseau tactique de Korriban : https://discord.gg/QR4FbcmegE</div>
