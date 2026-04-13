@@ -12,22 +12,15 @@ body{
 margin:0;
 padding:0;
 overflow:hidden;
-background:#000814;
+background:#000814 url("background.jpg") no-repeat center center fixed;
+background-size:cover;
 font-family:'Orbitron',sans-serif;
 color:#ffffff;
 }
 
-/* VIDEO */
-
+/* SUPPRESSION VIDEO */
 #background-video{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
-filter:brightness(0.4) contrast(1.2);
+display:none;
 }
 
 /* OVERLAY */
@@ -159,11 +152,11 @@ font-family:'Share Tech Mono', monospace;
 #corner{
 position:absolute;
 bottom:20px;
-left:30px; /* ← changé */
+left:30px;
 font-size:12px;
 font-family:'Share Tech Mono', monospace;
 color:#ffffff;
-text-align:left; /* ← changé */
+text-align:left;
 opacity:0.7;
 }
 
@@ -172,9 +165,10 @@ opacity:0.7;
 
 <body>
 
-<video id="background-video" autoplay muted loop>
+<!-- VIDEO SUPPRIMÉ -->
+<!-- <video id="background-video" autoplay muted loop>
 <source src="loading.webm" type="video/webm">
-</video>
+</video> -->
 
 <div id="overlay"></div>
 
@@ -263,8 +257,6 @@ status.innerText = "Connexion établie"
 }
 
 load()
-
-/* MUSIC */
 
 const music = document.getElementById("music")
 
