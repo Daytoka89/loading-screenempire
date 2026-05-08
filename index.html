@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Centralist United States</title>
+<title>21st Nova Corps</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
@@ -12,13 +12,14 @@ body{
 margin:0;
 padding:0;
 overflow:hidden;
-background:#000814 url("background.png") no-repeat center center fixed;
+background:#0b0f16 url("background.png") no-repeat center center fixed;
 background-size:cover;
 font-family:'Orbitron',sans-serif;
 color:#ffffff;
 }
 
-/* SUPPRESSION VIDEO */
+/* VIDEO OFF */
+
 #background-video{
 display:none;
 }
@@ -29,7 +30,13 @@ display:none;
 position:fixed;
 width:100%;
 height:100%;
-background:linear-gradient(120deg, rgba(0,32,91,0.6), rgba(139,0,0,0.6));
+background:
+linear-gradient(
+120deg,
+rgba(10,10,10,0.82),
+rgba(40,40,40,0.55),
+rgba(120,20,20,0.40)
+);
 z-index:-1;
 }
 
@@ -42,8 +49,8 @@ width:100%;
 height:100%;
 background:repeating-linear-gradient(
 to bottom,
-rgba(255,255,255,0.03),
-rgba(255,255,255,0.03) 1px,
+rgba(255,255,255,0.02),
+rgba(255,255,255,0.02) 1px,
 transparent 1px,
 transparent 3px
 );
@@ -67,49 +74,61 @@ text-align:center;
 /* LOGO */
 
 #logo{
-width:140px;
-margin-bottom:15px;
-filter:drop-shadow(0 0 15px #ffffff);
+width:160px;
+margin-bottom:18px;
+filter:
+drop-shadow(0 0 12px #ffffff)
+drop-shadow(0 0 25px #7f1d1d);
 }
 
 /* TITLE */
 
 #title{
-font-size:55px;
-letter-spacing:5px;
+font-size:58px;
+letter-spacing:6px;
 color:#ffffff;
-text-shadow:0 0 10px #1e90ff,0 0 25px #ff0000;
+text-shadow:
+0 0 10px #ffffff,
+0 0 25px #991b1b,
+0 0 45px #7f1d1d;
 }
 
 /* SUBTITLE */
 
 #subtitle{
-font-size:16px;
-color:#cfd8ff;
-letter-spacing:3px;
+font-size:15px;
+color:#d7d7d7;
+letter-spacing:4px;
 margin-bottom:40px;
 font-family:'Share Tech Mono', monospace;
+text-transform:uppercase;
 }
 
 /* TERMINAL */
 
 #terminal{
-width:800px;
+width:850px;
 max-width:90%;
-height:260px;
-background:rgba(0,0,0,0.75);
-border:2px solid #1e90ff;
-box-shadow:0 0 20px #1e90ff;
+height:270px;
+background:rgba(0,0,0,0.78);
+border:2px solid #8b0000;
+box-shadow:
+0 0 20px rgba(139,0,0,0.9),
+0 0 50px rgba(255,255,255,0.08);
 padding:20px;
 overflow:hidden;
 text-align:left;
 font-family:'Share Tech Mono', monospace;
 font-size:14px;
-color:#cfd8ff;
+color:#d8d8d8;
+backdrop-filter:blur(3px);
 }
+
+/* CURSOR */
 
 #line{
 animation:blink 1s infinite;
+color:#ffffff;
 }
 
 @keyframes blink{
@@ -122,18 +141,29 @@ animation:blink 1s infinite;
 
 #progress-container{
 margin-top:35px;
-width:400px;
+width:420px;
 max-width:80%;
 height:18px;
 border:1px solid #ffffff;
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.65);
+overflow:hidden;
 }
 
 #progress{
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#1e90ff,#ffffff,#ff0000);
-box-shadow:0 0 10px #ffffff;
+background:
+linear-gradient(
+90deg,
+#4b0000,
+#b91c1c,
+#ffffff,
+#b91c1c,
+#4b0000
+);
+box-shadow:
+0 0 10px #ffffff,
+0 0 20px #7f1d1d;
 transition:width 0.3s;
 }
 
@@ -145,6 +175,7 @@ font-size:14px;
 letter-spacing:2px;
 color:#ffffff;
 font-family:'Share Tech Mono', monospace;
+text-transform:uppercase;
 }
 
 /* CORNER */
@@ -155,9 +186,38 @@ bottom:20px;
 left:30px;
 font-size:12px;
 font-family:'Share Tech Mono', monospace;
-color:#ffffff;
+color:#d0d0d0;
 text-align:left;
-opacity:0.7;
+opacity:0.8;
+line-height:20px;
+}
+
+/* REPUBLIC SYMBOL */
+
+#republic{
+position:absolute;
+top:30px;
+right:40px;
+font-size:12px;
+font-family:'Share Tech Mono', monospace;
+letter-spacing:3px;
+color:#ffffff;
+opacity:0.65;
+text-align:right;
+}
+
+/* AMBIENT RED LIGHT */
+
+#ambient{
+position:fixed;
+width:700px;
+height:700px;
+background:radial-gradient(circle, rgba(120,0,0,0.28), transparent 70%);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+pointer-events:none;
+z-index:-1;
 }
 
 </style>
@@ -165,21 +225,22 @@ opacity:0.7;
 
 <body>
 
-<!-- VIDEO SUPPRIMÉ -->
-<!-- <video id="background-video" autoplay muted loop>
-<source src="loading.webm" type="video/webm">
-</video> -->
-
 <div id="overlay"></div>
+<div id="ambient"></div>
+
+<div id="republic">
+GALACTIC REPUBLIC<br>
+21ST NOVA CORPS
+</div>
 
 <div id="main">
 
 <img id="logo" src="logo.png">
 
-<div id="title">CENTRALIST UNITED STATES</div>
+<div id="title">21ST NOVA CORPS</div>
 
 <div id="subtitle">
-https://discord.gg/bZJ7KGuMZd • National Unity • Absolute Order
+Galactic Republic • Outer Rim Operations • Nova Battalion
 </div>
 
 <div id="terminal">
@@ -191,14 +252,14 @@ https://discord.gg/bZJ7KGuMZd • National Unity • Absolute Order
 <div id="progress"></div>
 </div>
 
-<div id="status">Initialisation du système...</div>
+<div id="status">Initialisation des systèmes clones...</div>
 
 </div>
 
 <div id="corner">
-CLASSIFICATION : TOP SECRET<br>
-ACCESS LEVEL : ALPHA<br>
-CENTRALIST NETWORK
+CLEARANCE : REPUBLIC HIGH COMMAND<br>
+LEGION STATUS : ACTIVE<br>
+COMMANDER : GALACTIC REPUBLIC
 </div>
 
 <audio id="music" loop>
@@ -215,16 +276,16 @@ let percent = 0
 
 const messages = [
 
-"Connexion au réseau central...",
-"Authentification des citoyens...",
-"Chargement des bases...",
-"Synchronisation des forces armées...",
-"Activation des protocoles de sécurité...",
-"Chargement des unités...",
-"Synchronisation des données nationales...",
-"Stabilisation du système...",
-"Connexion sécurisée...",
-"Bienvenue, citoyen."
+"Connexion au réseau tactique de la République...",
+"Authentification des unités clones...",
+"Chargement des protocoles Nova Corps...",
+"Synchronisation des destroyers Venator...",
+"Activation des communications sécurisées...",
+"Chargement des bataillons d'assaut...",
+"Connexion aux avant-postes de l'Outer Rim...",
+"Calibration des systèmes de combat...",
+"Validation des ordres du Haut Commandement...",
+"Bienvenue, soldat de la République."
 
 ]
 
@@ -251,7 +312,10 @@ i++
 setTimeout(load,800)
 
 }else{
+
+progress.style.width = "100%"
 status.innerText = "Connexion établie"
+
 }
 
 }
@@ -261,8 +325,11 @@ load()
 const music = document.getElementById("music")
 
 setTimeout(()=>{
-music.volume=0.05
-music.play()
+
+music.volume = 0.05
+
+music.play().catch(()=>{})
+
 },2000)
 
 </script>
