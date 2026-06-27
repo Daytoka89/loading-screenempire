@@ -7,8 +7,10 @@
 
     <style>
         :root {
-            --accent-red: #c21818;
-            --accent-glow: rgba(194, 24, 24, 0.45);
+            /* DA UI : Conversion vers le thème Bleuté Tactique */
+            --accent-main: #00a0ff;
+            --accent-dark: #003c82;
+            --accent-glow: rgba(0, 160, 255, 0.45);
             --bg-card: rgba(6, 9, 15, 0.75);
             --border-color: rgba(255, 255, 255, 0.12);
         }
@@ -50,7 +52,7 @@
             position: fixed;
             width: 1200px;
             height: 500px;
-            background: radial-gradient(ellipse at center, rgba(194, 24, 24, 0.15), transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(0, 160, 255, 0.15), transparent 70%);
             bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
@@ -126,7 +128,7 @@
         }
 
         .highlight-text {
-            color: var(--accent-red);
+            color: var(--accent-main);
             font-weight: bold;
         }
 
@@ -145,7 +147,7 @@
             height: 240px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-left: 4px solid var(--accent-red);
+            border-left: 4px solid var(--accent-main);
             box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
             padding: 25px;
             overflow: hidden;
@@ -169,7 +171,7 @@
 
         .log-entry::before {
             content: "└ [SECURE] ";
-            color: var(--accent-red);
+            color: var(--accent-main);
             margin-right: 10px;
             font-weight: bold;
         }
@@ -180,7 +182,7 @@
 
         #line {
             animation: blink 1s infinite;
-            color: var(--accent-red);
+            color: var(--accent-main);
             font-weight: bold;
         }
 
@@ -216,12 +218,16 @@
             font-weight: 600;
         }
 
+        #counter {
+            color: var(--accent-main);
+        }
+
         #progress-container {
             width: 100%;
             max-width: 650px;
             height: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 160, 255, 0.05);
+            border: 1px solid rgba(0, 160, 255, 0.15);
             border-radius: 4px;
             overflow: hidden;
             padding: 1px;
@@ -230,7 +236,7 @@
         #progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-red) 0%, #ef4444 100%);
+            background: linear-gradient(90deg, var(--accent-main) 0%, #ffffff 100%);
             border-radius: 2px;
             box-shadow: 0 0 12px var(--accent-glow);
             transition: width 0.4s ease-out;
@@ -355,9 +361,7 @@
         }
     }
 
-    setTimeout(load, 500);
-
-    // Intégration Garry's Mod native pour intercepter le vrai chargement
+    // GMOD INTEGRATION NATIF (Inchangé)
     function DownloadingFile(filename) {
         status.innerText = "Téléchargement : " + filename;
         addLine("Téléchargement de l'archive impériale : " + filename);
@@ -372,11 +376,18 @@
         addLine("Mise à jour requise : " + needed + " fichiers manquants.");
     }
 
+    // Gestion de la musique
     const music = document.getElementById("music");
+    
+    // Tentative d'auto-play
     setTimeout(() => {
-        music.volume = 0.06;
+        music.volume = 0.05;
         music.play().catch(() => {});
     }, 1500);
+
+    // Lancement du chargement de simulation (si pas de GMod)
+    setTimeout(load, 500);
+
 </script>
 
 </body>
