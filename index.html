@@ -1,337 +1,382 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>21st Nova Corps</title>
+    <meta charset="UTF-8">
+    <title>Nyvaris Eltarius - Deployment HUD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght::400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-red: #c21818;
+            --accent-glow: rgba(194, 24, 24, 0.45);
+            --bg-card: rgba(6, 9, 15, 0.75);
+            --border-color: rgba(255, 255, 255, 0.12);
+        }
 
-<style>
+        * {
+            box-sizing: border-box;
+        }
 
-body{
-margin:0;
-padding:0;
-overflow:hidden;
-background:#0b0f16 url("background.png") no-repeat center center fixed;
-background-size:cover;
-font-family:'Orbitron',sans-serif;
-color:#ffffff;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #06090f url("background.png") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            height: 100vh;
+            user-select: none;
+        }
 
-/* VIDEO OFF */
+        /* OVERLAY HIGH-TECH & SCI-FI VIGNETTE */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(6, 9, 15, 0.4) 0%, rgba(3, 4, 7, 0.9) 100%);
+            z-index: 1;
+        }
 
-#background-video{
-display:none;
-}
+        #overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 4px);
+            pointer-events: none;
+        }
 
-/* OVERLAY */
+        /* GLOW BACKGROUND EFFETS */
+        #ambient-glow {
+            position: fixed;
+            width: 1200px;
+            height: 500px;
+            background: radial-gradient(ellipse at center, rgba(194, 24, 24, 0.15), transparent 70%);
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 2;
+        }
 
-#overlay{
-position:fixed;
-width:100%;
-height:100%;
-background:
-linear-gradient(
-120deg,
-rgba(10,10,10,0.82),
-rgba(40,40,40,0.55),
-rgba(120,20,20,0.40)
-);
-z-index:-1;
-}
+        /* MAIN CONTAINER */
+        #main-hud {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 50px 60px;
+            z-index: 3;
+        }
 
-/* SCANLINES */
+        /* TOP BANNER */
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
 
-body:after{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:repeating-linear-gradient(
-to bottom,
-rgba(255,255,255,0.02),
-rgba(255,255,255,0.02) 1px,
-transparent 1px,
-transparent 3px
-);
-pointer-events:none;
-z-index:5;
-}
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-/* MAIN */
+        #logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
 
-#main{
-position:absolute;
-width:100%;
-height:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
+        #title-container {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* LOGO */
+        #title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-#logo{
-width:160px;
-margin-bottom:18px;
-filter:
-drop-shadow(0 0 12px #ffffff)
-drop-shadow(0 0 25px #7f1d1d);
-}
+        #subtitle {
+            font-size: 12px;
+            color: #94a3b8;
+            letter-spacing: 3px;
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
 
-/* TITLE */
+        .header-right {
+            text-align: right;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
 
-#title{
-font-size:58px;
-letter-spacing:6px;
-color:#ffffff;
-text-shadow:
-0 0 10px #ffffff,
-0 0 25px #991b1b,
-0 0 45px #7f1d1d;
-}
+        .highlight-text {
+            color: var(--accent-red);
+            font-weight: bold;
+        }
 
-/* SUBTITLE */
+        /* CENTER: TERMINAL LOGS MODERNE */
+        .hud-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin: 40px 0;
+        }
 
-#subtitle{
-font-size:15px;
-color:#d7d7d7;
-letter-spacing:4px;
-margin-bottom:40px;
-font-family:'Share Tech Mono', monospace;
-text-transform:uppercase;
-}
+        #terminal {
+            width: 900px;
+            max-width: 100%;
+            height: 240px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-red);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            backdrop-filter: blur(8px);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
 
-/* TERMINAL */
+        #log {
+            line-height: 1.8;
+        }
 
-#terminal{
-width:850px;
-max-width:90%;
-height:270px;
-background:rgba(0,0,0,0.78);
-border:2px solid #8b0000;
-box-shadow:
-0 0 20px rgba(139,0,0,0.9),
-0 0 50px rgba(255,255,255,0.08);
-padding:20px;
-overflow:hidden;
-text-align:left;
-font-family:'Share Tech Mono', monospace;
-font-size:14px;
-color:#d8d8d8;
-backdrop-filter:blur(3px);
-}
+        .log-entry {
+            opacity: 0;
+            animation: fadeInLog 0.4s forwards;
+            display: flex;
+            align-items: center;
+        }
 
-/* CURSOR */
+        .log-entry::before {
+            content: "└ [SECURE] ";
+            color: var(--accent-red);
+            margin-right: 10px;
+            font-weight: bold;
+        }
 
-#line{
-animation:blink 1s infinite;
-color:#ffffff;
-}
+        @keyframes fadeInLog {
+            to { opacity: 0.85; }
+        }
 
-@keyframes blink{
-0%{opacity:1;}
-50%{opacity:0;}
-100%{opacity:1;}
-}
+        #line {
+            animation: blink 1s infinite;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
 
-/* PROGRESS */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
 
-#progress-container{
-margin-top:35px;
-width:420px;
-max-width:80%;
-height:18px;
-border:1px solid #ffffff;
-background:rgba(0,0,0,0.65);
-overflow:hidden;
-}
+        /* BOTTOM BANNER */
+        .hud-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-#progress{
-height:100%;
-width:0%;
-background:
-linear-gradient(
-90deg,
-#4b0000,
-#b91c1c,
-#ffffff,
-#b91c1c,
-#4b0000
-);
-box-shadow:
-0 0 10px #ffffff,
-0 0 20px #7f1d1d;
-transition:width 0.3s;
-}
+        #status-container {
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
 
-/* STATUS */
+        #status {
+            color: #ffffff;
+            font-weight: 600;
+        }
 
-#status{
-margin-top:12px;
-font-size:14px;
-letter-spacing:2px;
-color:#ffffff;
-font-family:'Share Tech Mono', monospace;
-text-transform:uppercase;
-}
+        #progress-container {
+            width: 100%;
+            max-width: 650px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            padding: 1px;
+        }
 
-/* CORNER */
+        #progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-red) 0%, #ef4444 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 12px var(--accent-glow);
+            transition: width 0.4s ease-out;
+        }
 
-#corner{
-position:absolute;
-bottom:20px;
-left:30px;
-font-size:12px;
-font-family:'Share Tech Mono', monospace;
-color:#d0d0d0;
-text-align:left;
-opacity:0.8;
-line-height:20px;
-}
-
-/* REPUBLIC SYMBOL */
-
-#republic{
-position:absolute;
-top:30px;
-right:40px;
-font-size:12px;
-font-family:'Share Tech Mono', monospace;
-letter-spacing:3px;
-color:#ffffff;
-opacity:0.65;
-text-align:right;
-}
-
-/* AMBIENT RED LIGHT */
-
-#ambient{
-position:fixed;
-width:700px;
-height:700px;
-background:radial-gradient(circle, rgba(120,0,0,0.28), transparent 70%);
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-pointer-events:none;
-z-index:-1;
-}
-
-</style>
+        /* INFO FOOTER */
+        .hud-meta {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 
 <body>
 
 <div id="overlay"></div>
-<div id="ambient"></div>
+<div id="ambient-glow"></div>
 
-<div id="republic">
-GALACTIC REPUBLIC<br>
-21ST NOVA CORPS
-</div>
+<div id="main-hud">
 
-<div id="main">
+    <div class="hud-header">
+        <div class="header-left">
+            <img id="logo" src="logo.png" alt="Logo">
+            <div id="title-container">
+                <div id="title">Nyvaris Eltarius</div>
+                <div id="subtitle">Apex Cohortis Imperialis • Hub de Déploiement Tactique</div>
+            </div>
+        </div>
+        <div class="header-right">
+            DIVISION : <span class="highlight-text">OSCURA CUSTODES</span><br>
+            STATUS ORIENTATION : UNITÉ D'ÉLITE
+        </div>
+    </div>
 
-<img id="logo" src="logo.png">
+    <div class="hud-center">
+        <div id="terminal">
+            <div id="log"></div>
+            <span id="line">█</span>
+        </div>
+    </div>
 
-<div id="title">21ST NOVA CORPS</div>
+    <div class="hud-footer">
+        <div id="status-container">
+            <span id="status">Initialisation des systèmes impériaux...</span>
+            <span id="counter">0%</span>
+        </div>
+        <div id="progress-container">
+            <div id="progress"></div>
+        </div>
+        
+        <div class="hud-meta">
+            <div>ACCÈS RESTREINT : HAUT COMMANDEMENT DE L'EMPIRE</div>
+            <div>STATUS : CONNEXION SÉCURISÉE CRITIQUE</div>
+        </div>
+    </div>
 
-<div id="subtitle">
-Galactic Republic • Outer Rim Operations • Nova Battalion
-</div>
-
-<div id="terminal">
-<div id="log"></div>
-<span id="line">█</span>
-</div>
-
-<div id="progress-container">
-<div id="progress"></div>
-</div>
-
-<div id="status">Initialisation des systèmes clones...</div>
-
-</div>
-
-<div id="corner">
-CLEARANCE : REPUBLIC HIGH COMMAND<br>
-LEGION STATUS : ACTIVE<br>
-COMMANDER : GALACTIC REPUBLIC
 </div>
 
 <audio id="music" loop>
-<source src="music.mp3" type="audio/mp3">
+    <source src="music.mp3" type="audio/mp3">
 </audio>
 
 <script>
+    const log = document.getElementById("log");
+    const progress = document.getElementById("progress");
+    const status = document.getElementById("status");
+    const counter = document.getElementById("counter");
 
-const log = document.getElementById("log")
-const progress = document.getElementById("progress")
-const status = document.getElementById("status")
+    let percent = 0;
+    let currentMsgIndex = 0;
 
-let percent = 0
+    const messages = [
+        "Établissement du lien crypté avec Nyvaris Eltarius...",
+        "Vérification des signatures de l'Apex Cohortis Imperialis...",
+        "Chargement des protocoles d'intervention de l'Oscura Custodes...",
+        "Séquençage des verrous neuronaux de sécurité...",
+        "Synchronisation de l'armement lourd et des équipements impériaux...",
+        "Récupération des coordonnées de largage tactique...",
+        "Téléchargement du manifeste des modules de l'armurerie...",
+        "Analyse de la zone de déploiement en cours...",
+        "Validation des accréditations par le Haut Commandement...",
+        "Préparation de l'armure de l'unité d'élite...",
+        "Liaison stabilisée. Prêt pour l'insertion."
+    ];
 
-const messages = [
+    function addLine(text) {
+        const entry = document.createElement("div");
+        entry.className = "log-entry";
+        entry.innerText = text;
+        log.appendChild(entry);
+        
+        const terminal = document.getElementById("terminal");
+        terminal.scrollTop = terminal.scrollHeight;
+    }
 
-"Connexion au réseau tactique de la République...",
-"Authentification des unités clones...",
-"Chargement des protocoles Nova Corps...",
-"Synchronisation des destroyers Venator...",
-"Activation des communications sécurisées...",
-"Chargement des bataillons d'assaut...",
-"Connexion aux avant-postes de l'Outer Rim...",
-"Calibration des systèmes de combat...",
-"Validation des ordres du Haut Commandement...",
-"Bienvenue, soldat de la République."
+    function load() {
+        if (percent < 100) {
+            percent += Math.floor(Math.random() * 8) + 2;
+            if (percent > 100) percent = 100;
 
-]
+            progress.style.width = percent + "%";
+            counter.innerText = percent + "%";
 
-let i = 0
+            if (currentMsgIndex < messages.length && percent > (currentMsgIndex * (100 / messages.length))) {
+                addLine(messages[currentMsgIndex]);
+                status.innerText = messages[currentMsgIndex];
+                currentMsgIndex++;
+            }
 
-function addLine(text){
-log.innerHTML += text + "<br>"
-log.scrollTop = log.scrollHeight
-}
+            setTimeout(load, 600);
+        } else {
+            progress.style.width = "100%";
+            counter.innerText = "100%";
+            status.innerText = "Déploiement imminent...";
+            addLine("Statut d'affectation : OPÉRATIONNEL.");
+        }
+    }
 
-function load(){
+    setTimeout(load, 500);
 
-if(percent < 100){
+    // Intégration Garry's Mod native pour intercepter le vrai chargement
+    function DownloadingFile(filename) {
+        status.innerText = "Téléchargement : " + filename;
+        addLine("Téléchargement de l'archive impériale : " + filename);
+    }
 
-percent += Math.random()*7
-progress.style.width = percent+"%"
+    function SetStatusChanged(statusText) {
+        status.innerText = statusText;
+        addLine(statusText);
+    }
 
-if(i < messages.length){
-addLine("> " + messages[i])
-status.innerText = messages[i]
-i++
-}
+    function SetFilesNeeded(needed) {
+        addLine("Mise à jour requise : " + needed + " fichiers manquants.");
+    }
 
-setTimeout(load,800)
-
-}else{
-
-progress.style.width = "100%"
-status.innerText = "Connexion établie"
-
-}
-
-}
-
-load()
-
-const music = document.getElementById("music")
-
-setTimeout(()=>{
-
-music.volume = 0.05
-
-music.play().catch(()=>{})
-
-},2000)
-
+    const music = document.getElementById("music");
+    setTimeout(() => {
+        music.volume = 0.06;
+        music.play().catch(() => {});
+    }, 1500);
 </script>
 
 </body>
