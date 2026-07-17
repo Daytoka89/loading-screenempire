@@ -2,17 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Nyvaris Eltarius - Deployment HUD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght::400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Nyvaris Eltarius - Écran de Déploiement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* DA UI : Conversion vers le thème Bleuté Tactique */
+            /* Palette de couleur alignée sur ton thème bleu signature */
             --accent-main: #00a0ff;
             --accent-dark: #003c82;
             --accent-glow: rgba(0, 160, 255, 0.45);
-            --bg-card: rgba(6, 9, 15, 0.75);
-            --border-color: rgba(255, 255, 255, 0.12);
+            --bg-card: rgba(6, 9, 15, 0.85);
+            --border-color: rgba(0, 160, 255, 0.25);
+            --grid-color: rgba(0, 160, 255, 0.02);
         }
 
         * {
@@ -31,36 +32,88 @@
             user-select: none;
         }
 
-        /* OVERLAY HIGH-TECH & SCI-FI VIGNETTE */
+        /* GRILLE ET OVERLAY TACTIQUE SCI-FI */
         #overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(6, 9, 15, 0.4) 0%, rgba(3, 4, 7, 0.9) 100%);
+            background: 
+                radial-gradient(circle at center, rgba(6, 9, 15, 0.2) 0%, rgba(3, 4, 7, 0.95) 100%),
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
             z-index: 1;
         }
 
+        /* Lignes de balayage écran (CRT) */
         #overlay::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 4px);
+            background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 4px);
             pointer-events: none;
         }
 
-        /* GLOW BACKGROUND EFFETS */
+        /* Ligne de scanner laser descendante */
+        #laser-scan {
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-main), transparent);
+            box-shadow: 0 0 15px var(--accent-main);
+            opacity: 0.7;
+            z-index: 2;
+            animation: scanLine 6s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { top: -10px; }
+            100% { top: 110%; }
+        }
+
+        /* EFFETS DE GLOW AMBIANT SOMBRE */
         #ambient-glow {
             position: fixed;
-            width: 1200px;
-            height: 500px;
-            background: radial-gradient(ellipse at center, rgba(0, 160, 255, 0.15), transparent 70%);
-            bottom: -150px;
+            width: 1400px;
+            height: 600px;
+            background: radial-gradient(ellipse at center, rgba(0, 160, 255, 0.12), transparent 70%);
+            bottom: -200px;
             left: 50%;
             transform: translateX(-50%);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* MAIN CONTAINER */
+        /* BOÎTE DESIGN HOLOGRAPHIQUE COINS COUPÉS */
+        .sci-fi-border {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 25px rgba(0, 160, 255, 0.1), inset 0 0 15px rgba(0, 160, 255, 0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Petits coins high-tech décoratifs */
+        .sci-fi-border::before, .sci-fi-border::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-color: var(--accent-main);
+            border-style: solid;
+            pointer-events: none;
+        }
+        .sci-fi-border::before {
+            top: -2px; left: -2px;
+            border-width: 2px 0 0 2px;
+        }
+        .sci-fi-border::after {
+            bottom: -2px; right: -2px;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* STRUCTURE GLOBALE */
         #main-hud {
             position: relative;
             width: 100%;
@@ -68,30 +121,36 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 50px 60px;
+            padding: 45px 50px;
             z-index: 3;
         }
 
-        /* TOP BANNER */
+        /* HEADER */
         .hud-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+            align-items: center;
+            border-bottom: 2px solid rgba(0, 160, 255, 0.15);
+            padding-bottom: 25px;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         #logo {
-            width: 70px;
-            height: 70px;
+            width: 75px;
+            height: 75px;
             object-fit: contain;
-            filter: drop-shadow(0 0 10px var(--accent-glow));
+            filter: drop-shadow(0 0 12px var(--accent-glow));
+            animation: pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 8px rgba(0, 160, 255, 0.3)); }
+            100% { filter: drop-shadow(0 0 18px rgba(0, 160, 255, 0.6)); }
         }
 
         #title-container {
@@ -100,90 +159,93 @@
         }
 
         #title {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #a5d8ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 160, 255, 0.25));
         }
 
         #subtitle {
-            font-size: 12px;
+            font-size: 11px;
             color: #94a3b8;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             font-family: 'Share Tech Mono', monospace;
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 5px;
         }
 
         .header-right {
             text-align: right;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 2px;
             color: #94a3b8;
-            line-height: 1.6;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent-main);
+            padding-left: 20px;
         }
 
         .highlight-text {
             color: var(--accent-main);
             font-weight: bold;
+            text-shadow: 0 0 8px var(--accent-glow);
         }
 
-        /* CENTER: TERMINAL LOGS MODERNE */
+        /* CONSOLE LOGS TERMINAL */
         .hud-center {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            margin: 40px 0;
+            margin: 30px 0;
         }
 
         #terminal {
-            width: 900px;
+            width: 950px;
             max-width: 100%;
-            height: 240px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--accent-main);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+            height: 280px;
             padding: 25px;
-            overflow: hidden;
+            overflow-y: hidden;
             font-family: 'Share Tech Mono', monospace;
             font-size: 14px;
             color: #e2e8f0;
-            backdrop-filter: blur(8px);
             clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
         }
 
         #log {
-            line-height: 1.8;
+            line-height: 2;
         }
 
         .log-entry {
             opacity: 0;
-            animation: fadeInLog 0.4s forwards;
+            animation: fadeInLog 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
             display: flex;
             align-items: center;
+            letter-spacing: 1px;
         }
 
         .log-entry::before {
-            content: "└ [SECURE] ";
+            content: "└ [SÉCURISÉ] ";
             color: var(--accent-main);
-            margin-right: 10px;
+            margin-right: 12px;
             font-weight: bold;
+            text-shadow: 0 0 5px var(--accent-glow);
         }
 
         @keyframes fadeInLog {
-            to { opacity: 0.85; }
+            from { transform: translateY(8px); opacity: 0; }
+            to { transform: translateY(0); opacity: 0.9; }
         }
 
         #line {
             animation: blink 1s infinite;
             color: var(--accent-main);
             font-weight: bold;
+            text-shadow: 0 0 8px var(--accent-glow);
         }
 
         @keyframes blink {
@@ -191,9 +253,9 @@
             50% { opacity: 0; }
         }
 
-        /* BOTTOM BANNER */
+        /* BAS DE PAGE (BARRE DE CHARGEMENT) */
         .hud-footer {
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(0, 160, 255, 0.15);
             padding-top: 25px;
             display: flex;
             flex-direction: column;
@@ -202,10 +264,10 @@
 
         #status-container {
             width: 100%;
-            max-width: 650px;
+            max-width: 700px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
             letter-spacing: 2px;
@@ -220,15 +282,17 @@
 
         #counter {
             color: var(--accent-main);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--accent-glow);
         }
 
         #progress-container {
             width: 100%;
-            max-width: 650px;
-            height: 8px;
-            background: rgba(0, 160, 255, 0.05);
-            border: 1px solid rgba(0, 160, 255, 0.15);
-            border-radius: 4px;
+            max-width: 700px;
+            height: 10px;
+            background: rgba(0, 160, 255, 0.04);
+            border: 1px solid rgba(0, 160, 255, 0.2);
+            border-radius: 5px;
             overflow: hidden;
             padding: 1px;
         }
@@ -236,13 +300,13 @@
         #progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-main) 0%, #ffffff 100%);
-            border-radius: 2px;
-            box-shadow: 0 0 12px var(--accent-glow);
-            transition: width 0.4s ease-out;
+            background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent-main) 70%, #ffffff 100%);
+            border-radius: 4px;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: width 0.3s ease-out;
         }
 
-        /* INFO FOOTER */
+        /* META DONNÉES DU BAS EN FRANÇAIS */
         .hud-meta {
             width: 100%;
             display: flex;
@@ -250,8 +314,9 @@
             margin-top: 25px;
             font-family: 'Share Tech Mono', monospace;
             font-size: 11px;
-            color: #64748b;
-            letter-spacing: 1px;
+            color: #576880;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -259,10 +324,12 @@
 <body>
 
 <div id="overlay"></div>
+<div id="laser-scan"></div>
 <div id="ambient-glow"></div>
 
 <div id="main-hud">
 
+    <!-- En-tête de l'interface en français -->
     <div class="hud-header">
         <div class="header-left">
             <img id="logo" src="logo.png" alt="Logo">
@@ -272,21 +339,23 @@
             </div>
         </div>
         <div class="header-right">
-            REGIMENT : <span class="highlight-text">COHORTIS LISA XAN DRAKARILIA</span><br>
-            STATUS ORIENTATION : UNITÉ D'ÉLITE
+            RÉGIMENT : <span class="highlight-text">COHORTIS LISA XAN DRAKARILIA</span><br>
+            ORIENTATION DE L'UNITÉ : FORCES D'ÉLITE
         </div>
     </div>
 
+    <!-- Zone Centrale (Console) -->
     <div class="hud-center">
-        <div id="terminal">
+        <div id="terminal" class="sci-fi-border">
             <div id="log"></div>
             <span id="line">█</span>
         </div>
     </div>
 
+    <!-- Barre de Progression & Méta Informations -->
     <div class="hud-footer">
         <div id="status-container">
-            <span id="status">Initialisation des systèmes impériaux...</span>
+            <span id="status">Lancement des protocoles d'autorisation impériaux...</span>
             <span id="counter">0%</span>
         </div>
         <div id="progress-container">
@@ -294,8 +363,8 @@
         </div>
         
         <div class="hud-meta">
-            <div>ACCÈS RESTREINT : HAUT COMMANDEMENT DE L'EMPIRE</div>
-            <div>STATUS : CONNEXION SÉCURISÉE CRITIQUE</div>
+            <div>ACCÈS STRICTEMENT RESTREINT : HAUT COMMANDEMENT DE L'EMPIRE</div>
+            <div>SÉCURITÉ RÉSEAU : LIAISON APEX SÉCURISÉE</div>
         </div>
     </div>
 
@@ -313,7 +382,10 @@
 
     let percent = 0;
     let currentMsgIndex = 0;
+    let totalFiles = 100;
+    let neededFiles = 0;
 
+    // Messages immersifs traduits intégralement en français
     const messages = [
         "Établissement du lien crypté avec Nyvaris Eltarius...",
         "Vérification des signatures de l'Apex Cohortis Imperialis...",
@@ -324,8 +396,8 @@
         "Téléchargement du manifeste des modules de l'armurerie...",
         "Analyse de la zone de déploiement en cours...",
         "Validation des accréditations par le Haut Commandement...",
-        "Préparation de l'armure de l'unité d'élite...",
-        "Liaison stabilisée. Prêt pour l'insertion."
+        "Ajustement et calibrage des systèmes de l'armure d'élite...",
+        "Liaison stabilisée à 100%. Prêt pour l'insertion immédiate."
     ];
 
     function addLine(text) {
@@ -335,16 +407,22 @@
         log.appendChild(entry);
         
         const terminal = document.getElementById("terminal");
+        // Scroll automatique vers le bas pour suivre les logs
         terminal.scrollTop = terminal.scrollHeight;
+        
+        // Empêche la console d'être trop encombrée en conservant uniquement les 8 derniers logs
+        while (log.childNodes.length > 8) {
+            log.removeChild(log.firstChild);
+        }
     }
 
+    // Gestion de la simulation de chargement si exécuté hors de GMod (test navigateur)
     function load() {
         if (percent < 100) {
-            percent += Math.floor(Math.random() * 8) + 2;
+            percent += Math.floor(Math.random() * 6) + 2;
             if (percent > 100) percent = 100;
 
-            progress.style.width = percent + "%";
-            counter.innerText = percent + "%";
+            updateProgress(percent);
 
             if (currentMsgIndex < messages.length && percent > (currentMsgIndex * (100 / messages.length))) {
                 addLine(messages[currentMsgIndex]);
@@ -352,7 +430,7 @@
                 currentMsgIndex++;
             }
 
-            setTimeout(load, 600);
+            setTimeout(load, 500);
         } else {
             progress.style.width = "100%";
             counter.innerText = "100%";
@@ -361,32 +439,66 @@
         }
     }
 
-    // GMOD INTEGRATION NATIF (Inchangé)
+    // Fonction centralisée d'actualisation de l'UI
+    function updateProgress(percentage) {
+        progress.style.width = percentage + "%";
+        counter.innerText = Math.round(percentage) + "%";
+    }
+
+    // ==========================================
+    //  FONCTIONS NATIVES GARRY'S MOD (FRANÇAIS)
+    // ==========================================
+    
+    // Fichiers restants requis par le serveur
+    function SetFilesNeeded(needed) {
+        neededFiles = needed;
+        addLine("Mise à jour requise : " + needed + " fichiers nécessaires pour l'insertion.");
+    }
+
+    // Total de fichiers à charger
+    function SetFilesTotal(total) {
+        totalFiles = total;
+    }
+
+    // Fichier actuellement téléchargé
     function DownloadingFile(filename) {
         status.innerText = "Téléchargement : " + filename;
-        addLine("Téléchargement de l'archive impériale : " + filename);
+        addLine("Récupération de l'archive : " + filename);
+        
+        // Calcul du pourcentage dynamique basé sur les fichiers requis
+        if (neededFiles > 0) {
+            let filesDownloaded = totalFiles - neededFiles;
+            let dynamicPercent = (filesDownloaded / totalFiles) * 100;
+            updateProgress(Math.min(dynamicPercent, 99));
+        }
     }
 
+    // Statut global envoyé par le moteur Gmod
     function SetStatusChanged(statusText) {
-        status.innerText = statusText;
-        addLine(statusText);
+        // Traduction à la volée des statuts par défaut de Garry's Mod
+        let frenchStatus = statusText;
+        if (statusText === "Getting Addon Info") frenchStatus = "Récupération des informations des modules...";
+        else if (statusText === "Mounting Addons") frenchStatus = "Activation des modules complémentaires...";
+        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des archives du Workshop terminée.";
+        
+        status.innerText = frenchStatus;
+        addLine(frenchStatus);
     }
 
-    function SetFilesNeeded(needed) {
-        addLine("Mise à jour requise : " + needed + " fichiers manquants.");
-    }
-
-    // Gestion de la musique
+    // Audio et musique
     const music = document.getElementById("music");
-    
-    // Tentative d'auto-play
     setTimeout(() => {
-        music.volume = 0.05;
-        music.play().catch(() => {});
-    }, 1500);
+        music.volume = 0.08;
+        music.play().catch(() => {
+            // Empêche les erreurs d'autorisations de lecture des navigateurs récents
+            console.log("Lecture audio en attente d'interaction utilisateur.");
+        });
+    }, 1000);
 
-    // Lancement du chargement de simulation (si pas de GMod)
-    setTimeout(load, 500);
+    // Détection si l'écran est chargé dans GMod ou un navigateur autonome
+    if (!navigator.userAgent.includes("GMod")) {
+        setTimeout(load, 500);
+    }
 
 </script>
 
