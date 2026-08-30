@@ -2,18 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Nyvaris Eltarius - Écran de Déploiement</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Opération Citadelle - Centre de Commandement</title>
+    <!-- Polices thématiques WW2 : Special Elite (effet machine à écrire d'époque) et Black Ops One (style stencil militaire) -->
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Special+Elite&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Palette de couleur alignée sur ton thème bleu signature */
-            --accent-main: #00a0ff;
-            --accent-dark: #003c82;
-            --accent-glow: rgba(0, 160, 255, 0.45);
-            --bg-card: rgba(6, 9, 15, 0.85);
-            --border-color: rgba(0, 160, 255, 0.25);
-            --grid-color: rgba(0, 160, 255, 0.02);
+            /* Palette WW2 Opération Citadelle (Vert Olive, Ocre, Bunker) */
+            --accent-main: #556b2f;       /* Vert olive militaire */
+            --accent-bright: #cd853f;     /* Ocre / Khaki clair */
+            --accent-dark: #2e3b1f;       /* Vert armée sombre */
+            --accent-glow: rgba(205, 133, 63, 0.25);
+            --bg-card: rgba(20, 24, 20, 0.90);
+            --border-color: rgba(110, 125, 90, 0.4);
+            --grid-color: rgba(85, 107, 47, 0.05);
         }
 
         * {
@@ -24,93 +26,72 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #06090f url("background.png") no-repeat center center fixed;
+            background: #101410 url("background.png") no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Orbitron', sans-serif;
-            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            color: #ebf0e6;
             height: 100vh;
             user-select: none;
         }
 
-        /* GRILLE ET OVERLAY TACTIQUE SCI-FI */
+        /* OVERLAY MILITAIRE & EFFET VIGNETTE / CARTE DE CAMPAGNE */
         #overlay {
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(circle at center, rgba(6, 9, 15, 0.2) 0%, rgba(3, 4, 7, 0.95) 100%),
+                radial-gradient(circle at center, rgba(15, 18, 15, 0.4) 0%, rgba(8, 10, 8, 0.95) 100%),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             z-index: 1;
         }
 
-        /* Lignes de balayage écran (CRT) */
+        /* Effet Grain & Bruit de Film Ancien */
         #overlay::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 4px);
+            background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 4px);
             pointer-events: none;
-        }
-
-        /* Ligne de scanner laser descendante */
-        #laser-scan {
-            position: fixed;
-            top: -10px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent-main), transparent);
-            box-shadow: 0 0 15px var(--accent-main);
             opacity: 0.7;
-            z-index: 2;
-            animation: scanLine 6s linear infinite;
         }
 
-        @keyframes scanLine {
-            0% { top: -10px; }
-            100% { top: 110%; }
-        }
-
-        /* EFFETS DE GLOW AMBIANT SOMBRE */
+        /* VIGNETTE D'ÉTAT-MAJOR SOMBRE */
         #ambient-glow {
             position: fixed;
-            width: 1400px;
-            height: 600px;
-            background: radial-gradient(ellipse at center, rgba(0, 160, 255, 0.12), transparent 70%);
-            bottom: -200px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* BOÎTE DESIGN HOLOGRAPHIQUE COINS COUPÉS */
-        .sci-fi-border {
+        /* PANNEAU MILITAIRE STYLE CADRE DE CAMPAGNE */
+        .tactical-border {
             position: relative;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 25px rgba(0, 160, 255, 0.1), inset 0 0 15px rgba(0, 160, 255, 0.05);
-            backdrop-filter: blur(12px);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
         }
 
-        /* Petits coins high-tech décoratifs */
-        .sci-fi-border::before, .sci-fi-border::after {
+        /* Coins métalliques / renforts de caisse militaire */
+        .tactical-border::before, .tactical-border::after {
             content: "";
             position: absolute;
-            width: 12px;
-            height: 12px;
-            border-color: var(--accent-main);
+            width: 14px;
+            height: 14px;
+            border-color: var(--accent-bright);
             border-style: solid;
             pointer-events: none;
         }
-        .sci-fi-border::before {
+        .tactical-border::before {
             top: -2px; left: -2px;
-            border-width: 2px 0 0 2px;
+            border-width: 3px 0 0 3px;
         }
-        .sci-fi-border::after {
+        .tactical-border::after {
             bottom: -2px; right: -2px;
-            border-width: 0 2px 2px 0;
+            border-width: 0 3px 3px 0;
         }
 
         /* STRUCTURE GLOBALE */
@@ -130,8 +111,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid rgba(0, 160, 255, 0.15);
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 25px;
+            background: rgba(10, 12, 10, 0.4);
+            border-radius: 4px;
+            padding: 15px 25px;
         }
 
         .header-left {
@@ -144,13 +128,10 @@
             width: 75px;
             height: 75px;
             object-fit: contain;
-            filter: drop-shadow(0 0 12px var(--accent-glow));
-            animation: pulseGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 8px rgba(0, 160, 255, 0.3)); }
-            100% { filter: drop-shadow(0 0 18px rgba(0, 160, 255, 0.6)); }
+            filter: sepia(0.6) hue-rotate(45deg) contrast(1.2);
+            border: 1px solid var(--border-color);
+            padding: 3px;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         #title-container {
@@ -159,43 +140,40 @@
         }
 
         #title {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: 5px;
+            font-family: 'Black Ops One', cursive;
+            font-size: 32px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #ffffff 0%, #a5d8ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0, 160, 255, 0.25));
+            color: #ebf0e6;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         #subtitle {
-            font-size: 11px;
-            color: #94a3b8;
-            letter-spacing: 4px;
-            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-bright);
+            letter-spacing: 3px;
+            font-family: 'Special Elite', cursive;
             text-transform: uppercase;
             margin-top: 5px;
         }
 
         .header-right {
             text-align: right;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: #94a3b8;
+            font-family: 'Special Elite', cursive;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            color: #9ba591;
             line-height: 1.8;
             border-left: 3px solid var(--accent-main);
             padding-left: 20px;
         }
 
         .highlight-text {
-            color: var(--accent-main);
+            color: var(--accent-bright);
             font-weight: bold;
-            text-shadow: 0 0 8px var(--accent-glow);
         }
 
-        /* CONSOLE LOGS TERMINAL */
+        /* REGISTRE DES TÉLÉGRAMMES / COMMANDEMENT */
         .hud-center {
             display: flex;
             justify-content: center;
@@ -210,10 +188,10 @@
             height: 280px;
             padding: 25px;
             overflow-y: hidden;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 14px;
-            color: #e2e8f0;
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+            font-family: 'Special Elite', cursive;
+            font-size: 15px;
+            color: #d8decb;
+            background: rgba(15, 18, 15, 0.85);
         }
 
         #log {
@@ -222,30 +200,28 @@
 
         .log-entry {
             opacity: 0;
-            animation: fadeInLog 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            animation: fadeInLog 0.3s ease-out forwards;
             display: flex;
             align-items: center;
             letter-spacing: 1px;
         }
 
         .log-entry::before {
-            content: "└ [SÉCURISÉ] ";
-            color: var(--accent-main);
+            content: "► [QG-ORDRE] ";
+            color: var(--accent-bright);
             margin-right: 12px;
             font-weight: bold;
-            text-shadow: 0 0 5px var(--accent-glow);
         }
 
         @keyframes fadeInLog {
-            from { transform: translateY(8px); opacity: 0; }
-            to { transform: translateY(0); opacity: 0.9; }
+            from { transform: translateY(6px); opacity: 0; }
+            to { transform: translateY(0); opacity: 0.95; }
         }
 
         #line {
-            animation: blink 1s infinite;
-            color: var(--accent-main);
+            animation: blink 0.8s infinite;
+            color: var(--accent-bright);
             font-weight: bold;
-            text-shadow: 0 0 8px var(--accent-glow);
         }
 
         @keyframes blink {
@@ -253,9 +229,9 @@
             50% { opacity: 0; }
         }
 
-        /* BAS DE PAGE (BARRE DE CHARGEMENT) */
+        /* BAS DE PAGE (BARRE DE DEPLOIEMENT) */
         .hud-footer {
-            border-top: 1px solid rgba(0, 160, 255, 0.15);
+            border-top: 2px solid var(--border-color);
             padding-top: 25px;
             display: flex;
             flex-direction: column;
@@ -264,58 +240,57 @@
 
         #status-container {
             width: 100%;
-            max-width: 700px;
+            max-width: 750px;
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 12px;
+            font-family: 'Special Elite', cursive;
+            font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #94a3b8;
+            color: #9ba591;
         }
 
         #status {
-            color: #ffffff;
+            color: #ebf0e6;
             font-weight: 600;
         }
 
         #counter {
-            color: var(--accent-main);
+            color: var(--accent-bright);
             font-weight: bold;
-            text-shadow: 0 0 5px var(--accent-glow);
         }
 
         #progress-container {
             width: 100%;
-            max-width: 700px;
-            height: 10px;
-            background: rgba(0, 160, 255, 0.04);
-            border: 1px solid rgba(0, 160, 255, 0.2);
-            border-radius: 5px;
+            max-width: 750px;
+            height: 14px;
+            background: rgba(10, 12, 10, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
             overflow: hidden;
-            padding: 1px;
+            padding: 2px;
         }
 
         #progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent-main) 70%, #ffffff 100%);
-            border-radius: 4px;
-            box-shadow: 0 0 15px var(--accent-glow);
+            background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent-main) 60%, var(--accent-bright) 100%);
+            border-radius: 1px;
+            box-shadow: 0 0 10px var(--accent-glow);
             transition: width 0.3s ease-out;
         }
 
-        /* META DONNÉES DU BAS EN FRANÇAIS */
+        /* META DONNÉES ET MENTION DU SECTEUR DE KURSK */
         .hud-meta {
             width: 100%;
             display: flex;
             justify-content: space-between;
             margin-top: 25px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 11px;
-            color: #576880;
-            letter-spacing: 2.5px;
+            font-family: 'Special Elite', cursive;
+            font-size: 12px;
+            color: #728065;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
     </style>
@@ -324,38 +299,37 @@
 <body>
 
 <div id="overlay"></div>
-<div id="laser-scan"></div>
 <div id="ambient-glow"></div>
 
 <div id="main-hud">
 
-    <!-- En-tête de l'interface en français -->
+    <!-- En-tête Militaire WW2 -->
     <div class="hud-header">
         <div class="header-left">
-            <img id="logo" src="logo.png" alt="Logo">
+            <img id="logo" src="logo.png" alt="Insigne">
             <div id="title-container">
-                <div id="title">Nyvaris Eltarius</div>
-                <div id="subtitle">Inquisitorium Custodes Nexus • Hub de Déploiement Tactique</div>
+                <div id="title">OPÉRATION CITADELLE</div>
+                <div id="subtitle">Front de l'Est • Quartier Général du Secteur</div>
             </div>
         </div>
         <div class="header-right">
-            RÉGIMENT : <span class="highlight-text">ICN</span><br>
-            ORIENTATION DE L'UNITÉ : FORCES D'ÉLITE
+            THÉÂTRE : <span class="highlight-text">SECTEUR DE KURSK (1943)</span><br>
+            STATUT DU RÉGIMENT : EN COURS DE DÉPLOIEMENT
         </div>
     </div>
 
-    <!-- Zone Centrale (Console) -->
+    <!-- Zone Centrale (Registre des Transmissions) -->
     <div class="hud-center">
-        <div id="terminal" class="sci-fi-border">
+        <div id="terminal" class="tactical-border">
             <div id="log"></div>
             <span id="line">█</span>
         </div>
     </div>
 
-    <!-- Barre de Progression & Méta Informations -->
+    <!-- Barre de Progression & Ordres de Déploiement -->
     <div class="hud-footer">
         <div id="status-container">
-            <span id="status">Lancement des protocoles d'autorisation...</span>
+            <span id="status">Réception des dépêches de l'état-major...</span>
             <span id="counter">0%</span>
         </div>
         <div id="progress-container">
@@ -363,8 +337,8 @@
         </div>
         
         <div class="hud-meta">
-            <div>ACCÈS STRICTEMENT RESTREINT : HAUT COMMANDEMENT DU CONCORDAT</div>
-            <div>SÉCURITÉ RÉSEAU : LIAISON CONCORDAT SÉCURISÉE</div>
+            <div>ACCÈS RESTREINT : DOCUMENT CLASSIFIÉ DE RANG I</div>
+            <div>TRANSMISSION RADIO : LIAISON SÉCURISÉE DU FRONT</div>
         </div>
     </div>
 
@@ -385,19 +359,19 @@
     let totalFiles = 100;
     let neededFiles = 0;
 
-    // Messages immersifs traduits intégralement en français
+    // Messages immersifs adaptés à la Seconde Guerre Mondiale (Opération Citadelle)
     const messages = [
-        "Établissement du lien crypté avec Inquisitorium Custodes Nexus...",
-        "Vérification des signatures Inquisitorium Custodes Nexust...",
-        "Chargement des protocoles d'intervention Inquisitorium Custodes Nexus..",
-        "Séquençage des verrous neuronaux de sécurité...",
-        "Synchronisation de l'armement lourd et des équipements...",
-        "Récupération des coordonnées de largage tactique...",
-        "Téléchargement du manifeste des modules de l'armurerie...",
-        "Analyse de la zone de déploiement en cours...",
-        "Validation des accréditations par le Haut Commandement...",
-        "Ajustement et calibrage des systèmes de l'armure d'élite...",
-        "Liaison stabilisée à 100%. Prêt pour l'insertion immédiate."
+        "Établissement du canal radio avec le Poste de Commandement...",
+        "Déchiffrement des cartes d'état-major du secteur...",
+        "Inspection des approvisionnements et des stocks de munitions...",
+        "Chargement des directives d'engagement tactique...",
+        "Synchronisation de la logistique des blindés et pièces d'artillerie...",
+        "Réception des relevés de reconnaissance aérienne...",
+        "Téléchargement de la liste d'affectation des régiments...",
+        "Analyse de la ligne de front et des tranchées ennemies...",
+        "Validation du bon d'affectation par le Haut Commandement...",
+        "Préparation de l'armement individuel et des équipements...",
+        "Canal stabilisé à 100%. Unités parées pour l'offensive."
     ];
 
     function addLine(text) {
@@ -407,16 +381,13 @@
         log.appendChild(entry);
         
         const terminal = document.getElementById("terminal");
-        // Scroll automatique vers le bas pour suivre les logs
         terminal.scrollTop = terminal.scrollHeight;
         
-        // Empêche la console d'être trop encombrée en conservant uniquement les 8 derniers logs
         while (log.childNodes.length > 8) {
             log.removeChild(log.firstChild);
         }
     }
 
-    // Gestion de la simulation de chargement si exécuté hors de GMod (test navigateur)
     function load() {
         if (percent < 100) {
             percent += Math.floor(Math.random() * 6) + 2;
@@ -434,38 +405,30 @@
         } else {
             progress.style.width = "100%";
             counter.innerText = "100%";
-            status.innerText = "Déploiement imminent...";
-            addLine("Statut d'affectation : OPÉRATIONNEL.");
+            status.innerText = "Déploiement sur la ligne de front...";
+            addLine("Ordres transmis : PRÊT POUR LE COMBAT.");
         }
     }
 
-    // Fonction centralisée d'actualisation de l'UI
     function updateProgress(percentage) {
         progress.style.width = percentage + "%";
         counter.innerText = Math.round(percentage) + "%";
     }
 
-    // ==========================================
-    //  FONCTIONS NATIVES GARRY'S MOD (FRANÇAIS)
-    // ==========================================
-    
-    // Fichiers restants requis par le serveur
+    // Integrations Garry's Mod
     function SetFilesNeeded(needed) {
         neededFiles = needed;
-        addLine("Mise à jour requise : " + needed + " fichiers nécessaires pour l'insertion.");
+        addLine("Mise à jour logistique : " + needed + " caisses de ravitaillement requises.");
     }
 
-    // Total de fichiers à charger
     function SetFilesTotal(total) {
         totalFiles = total;
     }
 
-    // Fichier actuellement téléchargé
     function DownloadingFile(filename) {
-        status.innerText = "Téléchargement : " + filename;
-        addLine("Récupération de l'archive : " + filename);
+        status.innerText = "Réception : " + filename;
+        addLine("Téléchargement du dossier : " + filename);
         
-        // Calcul du pourcentage dynamique basé sur les fichiers requis
         if (neededFiles > 0) {
             let filesDownloaded = totalFiles - neededFiles;
             let dynamicPercent = (filesDownloaded / totalFiles) * 100;
@@ -473,33 +436,27 @@
         }
     }
 
-    // Statut global envoyé par le moteur Gmod
     function SetStatusChanged(statusText) {
-        // Traduction à la volée des statuts par défaut de Garry's Mod
         let frenchStatus = statusText;
-        if (statusText === "Getting Addon Info") frenchStatus = "Récupération des informations des modules...";
-        else if (statusText === "Mounting Addons") frenchStatus = "Activation des modules complémentaires...";
-        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des archives du Workshop terminée.";
+        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des rapports d'armement...";
+        else if (statusText === "Mounting Addons") frenchStatus = "Préparation des équipements du front...";
+        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres militaire terminée.";
         
         status.innerText = frenchStatus;
         addLine(frenchStatus);
     }
 
-    // Audio et musique
     const music = document.getElementById("music");
     setTimeout(() => {
         music.volume = 0.08;
         music.play().catch(() => {
-            // Empêche les erreurs d'autorisations de lecture des navigateurs récents
             console.log("Lecture audio en attente d'interaction utilisateur.");
         });
     }, 1000);
 
-    // Détection si l'écran est chargé dans GMod ou un navigateur autonome
     if (!navigator.userAgent.includes("GMod")) {
         setTimeout(load, 500);
     }
-
 </script>
 
 </body>
