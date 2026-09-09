@@ -2,20 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Opération Citadelle - Centre de Commandement</title>
-    <!-- Polices thématiques WW2 : Special Elite (effet machine à écrire d'époque) et Black Ops One (style stencil militaire) -->
-    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Special+Elite&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <title>Frères Républicains - Centre de Commandement</title>
+    <!-- Polices thématiques Star Wars / Sci-Fi : Orbitron (HUD/Titres) et Share Tech Mono (Terminal Holonet) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Palette WW2 Opération Citadelle (Vert Olive, Ocre, Bunker) */
-            --accent-main: #556b2f;       /* Vert olive militaire */
-            --accent-bright: #cd853f;     /* Ocre / Khaki clair */
-            --accent-dark: #2e3b1f;       /* Vert armée sombre */
-            --accent-glow: rgba(205, 133, 63, 0.25);
-            --bg-card: rgba(20, 24, 20, 0.90);
-            --border-color: rgba(110, 125, 90, 0.4);
-            --grid-color: rgba(85, 107, 47, 0.05);
+            /* Palette République / Clone Wars (Bleu Holonet, Cyan lumineux, Noir Spatial) */
+            --accent-main: #00a2ff;       /* Bleu République */
+            --accent-bright: #00f0ff;     /* Cyan Holonet bright */
+            --accent-dark: #003a66;       /* Bleu sombre militaire */
+            --accent-glow: rgba(0, 240, 255, 0.35);
+            --bg-card: rgba(10, 16, 26, 0.90);
+            --border-color: rgba(0, 162, 255, 0.4);
+            --grid-color: rgba(0, 162, 255, 0.08);
         }
 
         * {
@@ -26,56 +26,56 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #101410 url("background.png") no-repeat center center fixed;
+            background: #05080c url("background.png") no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Oswald', sans-serif;
-            color: #ebf0e6;
+            font-family: 'Orbitron', sans-serif;
+            color: #e0f4ff;
             height: 100vh;
             user-select: none;
         }
 
-        /* OVERLAY MILITAIRE & EFFET VIGNETTE / CARTE DE CAMPAGNE */
+        /* OVERLAY HOLONET & EFFET GRILLE TACTIQUE */
         #overlay {
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(circle at center, rgba(15, 18, 15, 0.4) 0%, rgba(8, 10, 8, 0.95) 100%),
+                radial-gradient(circle at center, rgba(10, 20, 35, 0.3) 0%, rgba(3, 6, 12, 0.95) 100%),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-size: 100% 100%, 30px 30px, 30px 30px;
             z-index: 1;
         }
 
-        /* Effet Grain & Bruit de Film Ancien */
+        /* Effet Scanlines Holonet */
         #overlay::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 4px);
+            background: repeating-linear-gradient(to bottom, rgba(0, 162, 255, 0.05), rgba(0, 162, 255, 0.05) 2px, transparent 2px, transparent 4px);
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
-        /* VIGNETTE D'ÉTAT-MAJOR SOMBRE */
+        /* VIGNETTE DE DATAPAD TACTIQUE */
         #ambient-glow {
             position: fixed;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
+            box-shadow: inset 0 0 150px rgba(0, 10, 25, 0.9);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* PANNEAU MILITAIRE STYLE CADRE DE CAMPAGNE */
+        /* PANNEAU HOLONET STYLE CADRE DE COMMANDEMENT */
         .tactical-border {
             position: relative;
             background: var(--bg-card);
             border: 2px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2), inset 0 0 15px rgba(0, 162, 255, 0.1);
             backdrop-filter: blur(8px);
         }
 
-        /* Coins métalliques / renforts de caisse militaire */
+        /* Coins renforcés style armure / terminal républicain */
         .tactical-border::before, .tactical-border::after {
             content: "";
             position: absolute;
@@ -113,9 +113,10 @@
             align-items: center;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 25px;
-            background: rgba(10, 12, 10, 0.4);
+            background: rgba(5, 12, 22, 0.6);
             border-radius: 4px;
             padding: 15px 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .header-left {
@@ -128,10 +129,10 @@
             width: 75px;
             height: 75px;
             object-fit: contain;
-            filter: sepia(0.6) hue-rotate(45deg) contrast(1.2);
+            filter: drop-shadow(0 0 8px var(--accent-bright));
             border: 1px solid var(--border-color);
             padding: 3px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 20, 40, 0.4);
         }
 
         #title-container {
@@ -140,29 +141,30 @@
         }
 
         #title {
-            font-family: 'Black Ops One', cursive;
-            font-size: 32px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 30px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #ebf0e6;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--accent-bright);
         }
 
         #subtitle {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--accent-bright);
             letter-spacing: 3px;
-            font-family: 'Special Elite', cursive;
+            font-family: 'Share Tech Mono', monospace;
             text-transform: uppercase;
             margin-top: 5px;
         }
 
         .header-right {
             text-align: right;
-            font-family: 'Special Elite', cursive;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
             letter-spacing: 1.5px;
-            color: #9ba591;
+            color: #8daac9;
             line-height: 1.8;
             border-left: 3px solid var(--accent-main);
             padding-left: 20px;
@@ -173,7 +175,7 @@
             font-weight: bold;
         }
 
-        /* REGISTRE DES TÉLÉGRAMMES / COMMANDEMENT */
+        /* REGISTRE DU TERMINAL HOLONET */
         .hud-center {
             display: flex;
             justify-content: center;
@@ -188,10 +190,10 @@
             height: 280px;
             padding: 25px;
             overflow-y: hidden;
-            font-family: 'Special Elite', cursive;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 15px;
-            color: #d8decb;
-            background: rgba(15, 18, 15, 0.85);
+            color: #cce7ff;
+            background: rgba(6, 12, 20, 0.88);
         }
 
         #log {
@@ -207,7 +209,7 @@
         }
 
         .log-entry::before {
-            content: "► [QG-ORDRE] ";
+            content: "► [GAR-HOLONET] ";
             color: var(--accent-bright);
             margin-right: 12px;
             font-weight: bold;
@@ -229,7 +231,7 @@
             50% { opacity: 0; }
         }
 
-        /* BAS DE PAGE (BARRE DE DEPLOIEMENT) */
+        /* BAS DE PAGE (BARRE DE DÉPLOIEMENT) */
         .hud-footer {
             border-top: 2px solid var(--border-color);
             padding-top: 25px;
@@ -244,15 +246,15 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
-            font-family: 'Special Elite', cursive;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #9ba591;
+            color: #8daac9;
         }
 
         #status {
-            color: #ebf0e6;
+            color: #ffffff;
             font-weight: 600;
         }
 
@@ -265,11 +267,12 @@
             width: 100%;
             max-width: 750px;
             height: 14px;
-            background: rgba(10, 12, 10, 0.8);
+            background: rgba(4, 8, 15, 0.9);
             border: 1px solid var(--border-color);
             border-radius: 2px;
             overflow: hidden;
             padding: 2px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
         #progress {
@@ -277,19 +280,19 @@
             width: 0%;
             background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent-main) 60%, var(--accent-bright) 100%);
             border-radius: 1px;
-            box-shadow: 0 0 10px var(--accent-glow);
+            box-shadow: 0 0 12px var(--accent-glow);
             transition: width 0.3s ease-out;
         }
 
-        /* META DONNÉES ET MENTION DU SECTEUR DE KURSK */
+        /* META DONNÉES DE LA RÉPUBLIQUE */
         .hud-meta {
             width: 100%;
             display: flex;
             justify-content: space-between;
             margin-top: 25px;
-            font-family: 'Special Elite', cursive;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
-            color: #728065;
+            color: #527394;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -303,22 +306,22 @@
 
 <div id="main-hud">
 
-    <!-- En-tête Militaire WW2 -->
+    <!-- En-tête Grande Armée de la République -->
     <div class="hud-header">
         <div class="header-left">
-            <img id="logo" src="logo.png" alt="Insigne">
+            <img id="logo" src="logo.png" alt="Insigne République">
             <div id="title-container">
-                <div id="title">OPÉRATION CITADELLE</div>
-                <div id="subtitle">Front de l'Est • Quartier Général du Secteur</div>
+                <div id="title">FRÈRES RÉPUBLICAINS</div>
+                <div id="subtitle">Phase 1 • Centre de Commandement Tactique</div>
             </div>
         </div>
         <div class="header-right">
-            THÉÂTRE : <span class="highlight-text">SECTEUR DE KURSK (1943)</span><br>
-            STATUT DU RÉGIMENT : EN COURS DE DÉPLOIEMENT
+            AFFILIATION : <span class="highlight-text">GRANDE ARMÉE DE LA RÉPUBLIQUE</span><br>
+            STATUT DES CLONES : INJECTION DU MATRICULE EN COURS
         </div>
     </div>
 
-    <!-- Zone Centrale (Registre des Transmissions) -->
+    <!-- Zone Centrale (Registre Holonet) -->
     <div class="hud-center">
         <div id="terminal" class="tactical-border">
             <div id="log"></div>
@@ -329,7 +332,7 @@
     <!-- Barre de Progression & Ordres de Déploiement -->
     <div class="hud-footer">
         <div id="status-container">
-            <span id="status">Réception des dépêches de l'état-major...</span>
+            <span id="status">Initialisation de la liaison avec Kamino...</span>
             <span id="counter">0%</span>
         </div>
         <div id="progress-container">
@@ -337,8 +340,8 @@
         </div>
         
         <div class="hud-meta">
-            <div>ACCÈS RESTREINT : DOCUMENT CLASSIFIÉ DE RANG I</div>
-            <div>TRANSMISSION RADIO : LIAISON SÉCURISÉE DU FRONT</div>
+            <div>ACCÈS SÉCURISÉ : CANAL CRYPTÉ CLASSIFIÉ GAR</div>
+            <div>TRANSMISSION HOLONET : FRÉQUENCE SYNC LIGNE DE FRONT</div>
         </div>
     </div>
 
@@ -359,19 +362,19 @@
     let totalFiles = 100;
     let neededFiles = 0;
 
-    // Messages immersifs adaptés à la Seconde Guerre Mondiale (Opération Citadelle)
+    // Messages immersifs adaptés au thème Clone Wars (Phase 1)
     const messages = [
-        "Établissement du canal radio avec le Poste de Commandement...",
-        "Déchiffrement des cartes d'état-major du secteur...",
-        "Inspection des approvisionnements et des stocks de munitions...",
-        "Chargement des directives d'engagement tactique...",
-        "Synchronisation de la logistique des blindés et pièces d'artillerie...",
-        "Réception des relevés de reconnaissance aérienne...",
-        "Téléchargement de la liste d'affectation des régiments...",
-        "Analyse de la ligne de front et des tranchées ennemies...",
-        "Validation du bon d'affectation par le Haut Commandement...",
-        "Préparation de l'armement individuel et des équipements...",
-        "Canal stabilisé à 100%. Unités parées pour l'offensive."
+        "Établissement du canal sécurisé avec le Conseil Jedi...",
+        "Réception des données matricielles depuis Kamino...",
+        "Vérification des armures Phase 1 et casques tactiques...",
+        "Téléchargement des plans de bataille du secteur...",
+        "Synchronisation du réseau Datapad et balises Holonet...",
+        "Analyse du registre des bataillons et de la chaîne de commandement...",
+        "Vérification de l'armement : Blasters DC-15A et DC-15S...",
+        "Réception des rapports de reconnaissance des troupes de choc...",
+        "Validation de l'affectation de l'escouade par le Commandant...",
+        "Préparation des canonnières LAAT/i pour le largage...",
+        "Canal Holonet stabilisé à 100%. Troupes prêtes au déploiement."
     ];
 
     function addLine(text) {
@@ -405,8 +408,8 @@
         } else {
             progress.style.width = "100%";
             counter.innerText = "100%";
-            status.innerText = "Déploiement sur la ligne de front...";
-            addLine("Ordres transmis : PRÊT POUR LE COMBAT.");
+            status.innerText = "Déploiement sur le théâtre d'opérations...";
+            addLine("Ordres transmis : POUR LA RÉPUBLIQUE !");
         }
     }
 
@@ -415,10 +418,10 @@
         counter.innerText = Math.round(percentage) + "%";
     }
 
-    // Integrations Garry's Mod
+    // Intégrations Garry's Mod
     function SetFilesNeeded(needed) {
         neededFiles = needed;
-        addLine("Mise à jour logistique : " + needed + " caisses de ravitaillement requises.");
+        addLine("Mise à jour Holonet : " + needed + " modules tactiques requis.");
     }
 
     function SetFilesTotal(total) {
@@ -426,8 +429,8 @@
     }
 
     function DownloadingFile(filename) {
-        status.innerText = "Réception : " + filename;
-        addLine("Téléchargement du dossier : " + filename);
+        status.innerText = "Téléchargement : " + filename;
+        addLine("Réception du fichier : " + filename);
         
         if (neededFiles > 0) {
             let filesDownloaded = totalFiles - neededFiles;
@@ -438,9 +441,9 @@
 
     function SetStatusChanged(statusText) {
         let frenchStatus = statusText;
-        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des rapports d'armement...";
-        else if (statusText === "Mounting Addons") frenchStatus = "Préparation des équipements du front...";
-        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres militaire terminée.";
+        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des données d'armement...";
+        else if (statusText === "Mounting Addons") frenchStatus = "Configuration des équipements Phase 1...";
+        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres de la GAR terminée.";
         
         status.innerText = frenchStatus;
         addLine(frenchStatus);
