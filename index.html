@@ -2,20 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Frères Républicains - Centre de Commandement</title>
+    <title>L'Empire de Windu - Centre de Commandement Impérial</title>
     <!-- Polices thématiques Star Wars / Sci-Fi : Orbitron (HUD/Titres) et Share Tech Mono (Terminal Holonet) -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Palette République / Clone Wars (Bleu Holonet, Cyan lumineux, Noir Spatial) */
-            --accent-main: #00a2ff;       /* Bleu République */
-            --accent-bright: #00f0ff;     /* Cyan Holonet bright */
-            --accent-dark: #003a66;       /* Bleu sombre militaire */
-            --accent-glow: rgba(0, 240, 255, 0.35);
-            --bg-card: rgba(10, 16, 26, 0.90);
-            --border-color: rgba(0, 162, 255, 0.4);
-            --grid-color: rgba(0, 162, 255, 0.08);
+            /* Palette L'Empire de Windu (Violet Améthyste, Or Impérial, Sombre Tactique) */
+            --accent-main: #9333ea;       /* Violet Windu */
+            --accent-bright: #c084fc;     /* Violet Améthyste lumineux */
+            --accent-gold: #fbbf24;       /* Doré Impérial */
+            --accent-glow: rgba(192, 132, 252, 0.4);
+            --bg-card: rgba(15, 10, 26, 0.88);
+            --border-color: rgba(168, 85, 247, 0.45);
+            --grid-color: rgba(168, 85, 247, 0.08);
         }
 
         * {
@@ -26,71 +26,77 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #05080c url("background.png") no-repeat center center fixed;
+            background: #06030a url("background.png") no-repeat center center fixed;
             background-size: cover;
             font-family: 'Orbitron', sans-serif;
-            color: #e0f4ff;
+            color: #f3e8ff;
             height: 100vh;
             user-select: none;
         }
 
-        /* OVERLAY HOLONET & EFFET GRILLE TACTIQUE */
+        /* OVERLAY HOLONET & EFFET GRILLE TACTIQUE AMÉTHYSTE */
         #overlay {
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(circle at center, rgba(10, 20, 35, 0.3) 0%, rgba(3, 6, 12, 0.95) 100%),
+                radial-gradient(circle at center, rgba(30, 10, 50, 0.35) 0%, rgba(6, 3, 10, 0.96) 100%),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+            background-size: 100% 100%, 35px 35px, 35px 35px;
             z-index: 1;
         }
 
-        /* Effet Scanlines Holonet */
+        /* Effet Scanlines Holonet modernisé */
         #overlay::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(to bottom, rgba(0, 162, 255, 0.05), rgba(0, 162, 255, 0.05) 2px, transparent 2px, transparent 4px);
+            background: repeating-linear-gradient(to bottom, rgba(168, 85, 247, 0.04), rgba(168, 85, 247, 0.04) 2px, transparent 2px, transparent 5px);
             pointer-events: none;
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
-        /* VIGNETTE DE DATAPAD TACTIQUE */
+        /* VIGNETTE DE DATAPAD IMPÉRIAL */
         #ambient-glow {
             position: fixed;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 150px rgba(0, 10, 25, 0.9);
+            box-shadow: inset 0 0 160px rgba(15, 3, 30, 0.92);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* PANNEAU HOLONET STYLE CADRE DE COMMANDEMENT */
+        /* PANNEAU HOLONET STYLE CADRE IMPÉRIAL MODERNE */
         .tactical-border {
             position: relative;
             background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2), inset 0 0 15px rgba(0, 162, 255, 0.1);
-            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.25), inset 0 0 20px rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(12px);
+            clip-path: polygon(
+                0 15px, 15px 0, 
+                calc(100% - 15px) 0, 100% 15px, 
+                100% calc(100% - 15px), calc(100% - 15px) 100%, 
+                15px 100%, 0 calc(100% - 15px)
+            );
         }
 
-        /* Coins renforcés style armure / terminal républicain */
+        /* Coins renforcés style armure de la 187ème Légion */
         .tactical-border::before, .tactical-border::after {
             content: "";
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             border-color: var(--accent-bright);
             border-style: solid;
             pointer-events: none;
         }
         .tactical-border::before {
-            top: -2px; left: -2px;
+            top: 0; left: 0;
             border-width: 3px 0 0 3px;
         }
         .tactical-border::after {
-            bottom: -2px; right: -2px;
+            bottom: 0; right: 0;
             border-width: 0 3px 3px 0;
         }
 
@@ -102,7 +108,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 45px 50px;
+            padding: 40px 50px;
             z-index: 3;
         }
 
@@ -112,10 +118,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--border-color);
-            background: rgba(5, 12, 22, 0.6);
-            border-radius: 4px;
-            padding: 15px 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background: rgba(12, 6, 22, 0.75);
+            padding: 18px 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         }
 
         .header-left {
@@ -125,13 +130,14 @@
         }
 
         #logo {
-            width: 75px;
-            height: 75px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--accent-bright));
+            filter: drop-shadow(0 0 12px var(--accent-bright));
             border: 1px solid var(--border-color);
-            padding: 3px;
-            background: rgba(0, 20, 40, 0.4);
+            padding: 4px;
+            background: rgba(25, 10, 40, 0.5);
+            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
         }
 
         #title-container {
@@ -142,20 +148,29 @@
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 30px;
-            letter-spacing: 3px;
+            font-size: 32px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: #ffffff;
-            text-shadow: 0 0 10px var(--accent-bright);
+            text-shadow: 0 0 15px var(--accent-bright);
         }
 
         #subtitle {
-            font-size: 12px;
-            color: var(--accent-bright);
-            letter-spacing: 3px;
+            font-size: 13px;
+            color: var(--accent-gold);
+            letter-spacing: 3.5px;
             font-family: 'Share Tech Mono', monospace;
             text-transform: uppercase;
-            margin-top: 5px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #subtitle::before {
+            content: "●";
+            color: var(--accent-bright);
+            animation: blink 1.2s infinite;
         }
 
         .header-right {
@@ -163,14 +178,19 @@
             font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
             letter-spacing: 1.5px;
-            color: #8daac9;
+            color: #bfa6d9;
             line-height: 1.8;
-            border-left: 3px solid var(--accent-main);
+            border-left: 3px solid var(--accent-gold);
             padding-left: 20px;
         }
 
         .highlight-text {
             color: var(--accent-bright);
+            font-weight: bold;
+        }
+
+        .highlight-gold {
+            color: var(--accent-gold);
             font-weight: bold;
         }
 
@@ -183,7 +203,7 @@
 
         .discord-link:hover {
             color: #ffffff;
-            text-shadow: 0 0 8px var(--accent-bright);
+            text-shadow: 0 0 10px var(--accent-bright);
         }
 
         /* REGISTRE DU TERMINAL HOLONET */
@@ -192,23 +212,23 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         #terminal {
-            width: 950px;
+            width: 1000px;
             max-width: 100%;
-            height: 280px;
-            padding: 25px;
+            height: 300px;
+            padding: 25px 30px;
             overflow-y: hidden;
             font-family: 'Share Tech Mono', monospace;
             font-size: 15px;
-            color: #cce7ff;
-            background: rgba(6, 12, 20, 0.88);
+            color: #e9d5ff;
+            background: rgba(8, 4, 15, 0.92);
         }
 
         #log {
-            line-height: 2;
+            line-height: 2.1;
         }
 
         .log-entry {
@@ -220,8 +240,8 @@
         }
 
         .log-entry::before {
-            content: "► [GAR-HOLONET] ";
-            color: var(--accent-bright);
+            content: "◆ [WINDU-NET] ";
+            color: var(--accent-gold);
             margin-right: 12px;
             font-weight: bold;
         }
@@ -253,15 +273,15 @@
 
         #status-container {
             width: 100%;
-            max-width: 750px;
+            max-width: 800px;
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #8daac9;
+            color: #bfa6d9;
         }
 
         #status {
@@ -270,32 +290,32 @@
         }
 
         #counter {
-            color: var(--accent-bright);
+            color: var(--accent-gold);
             font-weight: bold;
         }
 
         #progress-container {
             width: 100%;
-            max-width: 750px;
-            height: 14px;
-            background: rgba(4, 8, 15, 0.9);
+            max-width: 800px;
+            height: 16px;
+            background: rgba(8, 4, 15, 0.95);
             border: 1px solid var(--border-color);
             border-radius: 2px;
             overflow: hidden;
             padding: 2px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
         }
 
         #progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent-main) 60%, var(--accent-bright) 100%);
+            background: linear-gradient(90deg, #581c87 0%, var(--accent-main) 50%, var(--accent-bright) 85%, var(--accent-gold) 100%);
             border-radius: 1px;
-            box-shadow: 0 0 12px var(--accent-glow);
+            box-shadow: 0 0 14px var(--accent-glow);
             transition: width 0.3s ease-out;
         }
 
-        /* META DONNÉES DE LA RÉPUBLIQUE */
+        /* META DONNÉES DE L'EMPIRE DE WINDU */
         .hud-meta {
             width: 100%;
             display: flex;
@@ -303,7 +323,7 @@
             margin-top: 25px;
             font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
-            color: #527394;
+            color: #8b68ab;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -317,23 +337,23 @@
 
 <div id="main-hud">
 
-    <!-- En-tête Grande Armée de la République -->
-    <div class="hud-header">
+    <!-- En-tête L'Empire de Windu -->
+    <div class="hud-header tactical-border">
         <div class="header-left">
-            <img id="logo" src="logo.png" alt="Insigne République">
+            <img id="logo" src="logo.png" alt="Insigne Empire de Windu">
             <div id="title-container">
-                <div id="title">FRÈRES RÉPUBLICAINS</div>
-                <div id="subtitle">Phase 1 • Centre de Commandement Tactique</div>
+                <div id="title">L'EMPIRE DE WINDU</div>
+                <div id="subtitle">187ÈME LÉGION • CENTRE TACTIQUE SUPRÊME</div>
             </div>
         </div>
         <div class="header-right">
-            AFFILIATION : <span class="highlight-text">GRANDE ARMÉE DE LA RÉPUBLIQUE</span><br>
-            STATUT DES CLONES : INJECTION DU MATRICULE EN COURS<br>
+            AFFILIATION : <span class="highlight-gold">CONSEIL SOUVERAIN DE WINDU</span><br>
+            STATUT DES TROUPES : <span class="highlight-text">SYNCHRONISATION 187TH EN COURS</span><br>
             DISCORD : <a href="https://discord.gg/gP6PTu6hmz" target="_blank" class="discord-link">discord.gg/gP6PTu6hmz</a>
         </div>
     </div>
 
-    <!-- Zone Centrale (Registre Holonet) -->
+    <!-- Zone Centrale (Registre Holonet Impérial) -->
     <div class="hud-center">
         <div id="terminal" class="tactical-border">
             <div id="log"></div>
@@ -344,7 +364,7 @@
     <!-- Barre de Progression & Ordres de Déploiement -->
     <div class="hud-footer">
         <div id="status-container">
-            <span id="status">Initialisation de la liaison avec Kamino...</span>
+            <span id="status">Initialisation du réseau tactique améthyste...</span>
             <span id="counter">0%</span>
         </div>
         <div id="progress-container">
@@ -352,8 +372,8 @@
         </div>
         
         <div class="hud-meta">
-            <div>ACCÈS SÉCURISÉ : CANAL CRYPTÉ CLASSIFIÉ GAR</div>
-            <div>TRANSMISSION HOLONET : FRÉQUENCE SYNC LIGNE DE FRONT</div>
+            <div>ACCÈS IMPÉRIAL : CANAL CRYPTÉ CLASSIFIÉ HAOT</div>
+            <div>FREQUENCE HOLONET : 187.9 MHZ - SECTEUR PRIVILÉGIÉ</div>
         </div>
     </div>
 
@@ -374,19 +394,19 @@
     let totalFiles = 100;
     let neededFiles = 0;
 
-    // Messages immersifs adaptés au thème Clone Wars (Phase 1)
+    // Messages immersifs adaptés à L'Empire de Windu & la 187ème Légion
     const messages = [
-        "Établissement du canal sécurisé avec le Conseil Jedi...",
-        "Réception des données matricielles depuis Kamino...",
-        "Vérification des armures Phase 1 et casques tactiques...",
-        "Téléchargement des plans de bataille du secteur...",
-        "Synchronisation du réseau Datapad et balises Holonet...",
-        "Analyse du registre des bataillons et de la chaîne de commandement...",
-        "Vérification de l'armement : Blasters DC-15A et DC-15S...",
-        "Réception des rapports de reconnaissance des troupes de choc...",
-        "Validation de l'affectation de l'escouade par le Commandant...",
-        "Préparation des canonnières LAAT/i pour le largage...",
-        "Canal Holonet stabilisé à 100%. Troupes prêtes au déploiement."
+        "Établissement de la liaison prioritaire avec le Commandement Mace Windu...",
+        "Authentification des identifiants de la 187ème Légion...",
+        "Chargement des directives impériales et règles d'engagement...",
+        "Mise à jour des armures améthyste et systèmes de ciblage...",
+        "Synchronisation des récepteurs Vaapad et balises Holonet...",
+        "Analyse de la chaîne de commandement du Conseil Souverain...",
+        "Calibration de l'équipement lourd et des blasters DC-15...",
+        "Vérification des protocoles de sécurité du secteur impérial...",
+        "Validation de l'affectation de l'escouade par le Général...",
+        "Préparation des navettes de transport pour la zone d'opération...",
+        "Réseau Holonet stabilisé. Prêt pour la suprématie de l'Empire !"
     ];
 
     function addLine(text) {
@@ -420,8 +440,8 @@
         } else {
             progress.style.width = "100%";
             counter.innerText = "100%";
-            status.innerText = "Déploiement sur le théâtre d'opérations...";
-            addLine("Ordres transmis : POUR LA RÉPUBLIQUE !");
+            status.innerText = "Déploiement immédiat sur le théâtre d'opérations...";
+            addLine("Décret exécuté : POUR L'EMPIRE DE WINDU !");
         }
     }
 
@@ -453,9 +473,9 @@
 
     function SetStatusChanged(statusText) {
         let frenchStatus = statusText;
-        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des données d'armement...";
-        else if (statusText === "Mounting Addons") frenchStatus = "Configuration des équipements Phase 1...";
-        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres de la GAR terminée.";
+        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des données d'armement impérial...";
+        else if (statusText === "Mounting Addons") frenchStatus = "Configuration des équipements 187th...";
+        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres de l'Empire terminée.";
         
         status.innerText = frenchStatus;
         addLine(frenchStatus);
