@@ -2,259 +2,332 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>L'Empire de Kuat - Ordre Krath</title>
-    <!-- Polices thématiques Star Wars / Sci-Fi : Orbitron (HUD/Titres) et Share Tech Mono (Terminal Holonet) -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>L'Empire de Kuat — Terminal Datapad Holonet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Palette L'Empire de Windu (Violet Améthyste, Or Impérial, Sombre Tactique) */
-            --accent-main: #9333ea;       /* Violet Windu */
-            --accent-bright: #c084fc;     /* Violet Améthyste lumineux */
-            --accent-gold: #fbbf24;       /* Doré Impérial */
-            --accent-glow: rgba(192, 132, 252, 0.4);
-            --bg-card: rgba(15, 10, 26, 0.88);
-            --border-color: rgba(168, 85, 247, 0.45);
-            --grid-color: rgba(168, 85, 247, 0.08);
+            /* Palette unifiée Terminal Impérial Kuat / Holonet */
+            --bg-dark:       #070c13;
+            --bg-panel:      rgba(10, 17, 27, 0.90);
+            --bg-header:     rgba(12, 21, 34, 0.96);
+            --cyan-main:     #00d2ff;
+            --cyan-bright:   #5ce1ff;
+            --cyan-dim:      rgba(0, 185, 235, 0.35);
+            --gold-kuat:     #f5b42d;
+            --gold-dim:      rgba(245, 180, 45, 0.45);
+            --green-ok:      #23dc82;
+            --text-main:     #ecf5ff;
+            --text-muted:    #8aafce;
+            --grid-line:     rgba(0, 195, 255, 0.055);
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             overflow: hidden;
-            background: #06030a url("background.png") no-repeat center center fixed;
+            background: var(--bg-dark) url("background.png") no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Orbitron', sans-serif;
-            color: #f3e8ff;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-main);
             height: 100vh;
+            width: 100vw;
             user-select: none;
         }
 
-        /* OVERLAY HOLONET & EFFET GRILLE TACTIQUE AMÉTHYSTE */
+        /* Grille holographique + assombrissement tactique */
         #overlay {
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(circle at center, rgba(30, 10, 50, 0.35) 0%, rgba(6, 3, 10, 0.96) 100%),
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 100%, 35px 35px, 35px 35px;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(10, 22, 38, 0.55) 0%, rgba(5, 9, 15, 0.94) 100%),
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 100% 100%, 34px 34px, 34px 34px;
             z-index: 1;
         }
 
-        /* Effet Scanlines Holonet modernisé */
+        /* Scanlines discrètes */
         #overlay::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(to bottom, rgba(168, 85, 247, 0.04), rgba(168, 85, 247, 0.04) 2px, transparent 2px, transparent 5px);
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 210, 255, 0.025),
+                rgba(0, 210, 255, 0.025) 1px,
+                transparent 1px,
+                transparent 4px
+            );
             pointer-events: none;
-            opacity: 0.85;
         }
 
-        /* VIGNETTE DE DATAPAD IMPÉRIAL */
-        #ambient-glow {
+        #ambient-vignette {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            box-shadow: inset 0 0 160px rgba(15, 3, 30, 0.92);
+            inset: 0;
+            box-shadow: inset 0 0 140px rgba(3, 6, 12, 0.95);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* PANNEAU HOLONET STYLE CADRE IMPÉRIAL MODERNE */
-        .tactical-border {
+        /* Cadre Datapad Impérial */
+        .datapad-box {
             position: relative;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 25px rgba(147, 51, 234, 0.25), inset 0 0 20px rgba(168, 85, 247, 0.12);
-            backdrop-filter: blur(12px);
-            clip-path: polygon(
-                0 15px, 15px 0, 
-                calc(100% - 15px) 0, 100% 15px, 
-                100% calc(100% - 15px), calc(100% - 15px) 100%, 
-                15px 100%, 0 calc(100% - 15px)
-            );
+            background: var(--bg-panel);
+            border: 1px solid var(--cyan-dim);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.65), inset 0 0 24px rgba(0, 185, 235, 0.06);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        /* Coins renforcés style armure de la 187ème Légion */
-        .tactical-border::before, .tactical-border::after {
+        .datapad-box::before,
+        .datapad-box::after {
             content: "";
             position: absolute;
-            width: 16px;
-            height: 16px;
-            border-color: var(--accent-bright);
+            width: 14px;
+            height: 14px;
+            border-color: var(--gold-kuat);
             border-style: solid;
             pointer-events: none;
-        }
-        .tactical-border::before {
-            top: 0; left: 0;
-            border-width: 3px 0 0 3px;
-        }
-        .tactical-border::after {
-            bottom: 0; right: 0;
-            border-width: 0 3px 3px 0;
+            z-index: 5;
         }
 
-        /* STRUCTURE GLOBALE */
+        .datapad-box::before {
+            top: 0;
+            left: 0;
+            border-width: 2px 0 0 2px;
+        }
+
+        .datapad-box::after {
+            bottom: 0;
+            right: 0;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* STRUCTURE PRINCIPALE */
         #main-hud {
             position: relative;
+            z-index: 3;
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 40px 50px;
-            z-index: 3;
+            padding: 22px 30px;
+            gap: 16px;
         }
 
-        /* HEADER */
+        /* =========================================================
+           EN-TÊTE DU DATAPAD
+        ========================================================= */
         .hud-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--border-color);
-            background: rgba(12, 6, 22, 0.75);
-            padding: 18px 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            background: var(--bg-header);
+            border-bottom: 2px solid var(--gold-kuat);
+            padding: 12px 24px;
+            flex-shrink: 0;
+        }
+
+        .hud-header::before {
+            border-color: var(--cyan-main);
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 18px;
         }
 
         #logo {
-            width: 80px;
-            height: 80px;
+            width: 62px;
+            height: 62px;
             object-fit: contain;
-            filter: drop-shadow(0 0 12px var(--accent-bright));
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--gold-dim);
+            border-radius: 6px;
             padding: 4px;
-            background: rgba(25, 10, 40, 0.5);
-            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
-        }
-
-        #title-container {
-            display: flex;
-            flex-direction: column;
+            background: rgba(7, 13, 22, 0.85);
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.35));
         }
 
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 32px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+            font-size: 26px;
+            letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 0 15px var(--accent-bright);
+            text-shadow: 0 0 14px rgba(0, 210, 255, 0.45);
         }
 
         #subtitle {
-            font-size: 13px;
-            color: var(--accent-gold);
-            letter-spacing: 3.5px;
             font-family: 'Share Tech Mono', monospace;
-            text-transform: uppercase;
+            font-size: 13px;
+            color: var(--gold-kuat);
+            letter-spacing: 2.5px;
             margin-top: 4px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        #subtitle::before {
-            content: "●";
-            color: var(--accent-bright);
-            animation: blink 1.2s infinite;
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green-ok);
+            box-shadow: 0 0 8px var(--green-ok);
+            animation: pulse 1.4s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.85); }
         }
 
         .header-right {
             text-align: right;
             font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
-            letter-spacing: 1.5px;
-            color: #bfa6d9;
-            line-height: 1.8;
-            border-left: 3px solid var(--accent-gold);
-            padding-left: 20px;
+            line-height: 1.65;
+            color: var(--text-muted);
+            border-left: 3px solid var(--gold-kuat);
+            padding-left: 18px;
         }
 
-        .highlight-text {
-            color: var(--accent-bright);
-            font-weight: bold;
+        .hl-gold { color: var(--gold-kuat); font-weight: bold; }
+        .hl-cyan { color: var(--cyan-main); font-weight: bold; }
+
+        /* =========================================================
+           CORPS CENTRAL : CONSOLE GAUCHE + JOURNAL DE R2 DROITE
+        ========================================================= */
+        .hud-workspace {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 38% 1fr;
+            gap: 18px;
+            min-height: 0;
         }
 
-        .highlight-gold {
-            color: var(--accent-gold);
-            font-weight: bold;
-        }
-
-        .discord-link {
-            color: var(--accent-bright);
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .discord-link:hover {
-            color: #ffffff;
-            text-shadow: 0 0 10px var(--accent-bright);
-        }
-
-        /* REGISTRE DU TERMINAL HOLONET */
-        .hud-center {
+        .panel-topbar {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            flex-grow: 1;
-            margin: 25px 0;
+            background: var(--bg-header);
+            padding: 9px 16px;
+            border-bottom: 1px solid var(--cyan-dim);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
         }
 
-        #terminal {
-            width: 1000px;
-            max-width: 100%;
-            height: 300px;
-            padding: 25px 30px;
-            overflow-y: hidden;
+        .panel-topbar .tag-gold {
+            color: var(--gold-kuat);
+        }
+
+        .panel-topbar .tag-cyan {
+            color: var(--cyan-main);
             font-family: 'Share Tech Mono', monospace;
-            font-size: 15px;
-            color: #e9d5ff;
-            background: rgba(8, 4, 15, 0.92);
+            font-size: 12px;
         }
 
-        #log {
-            line-height: 2.1;
+        /* COLONNE GAUCHE : TERMINAL & TÉLÉMÉTRIE */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-height: 0;
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 12px 14px;
+            background: rgba(7, 13, 21, 0.75);
+            border-bottom: 1px solid rgba(0, 185, 235, 0.18);
+        }
+
+        .tele-item {
+            background: rgba(13, 23, 37, 0.85);
+            border: 1px solid rgba(0, 185, 235, 0.22);
+            border-left: 3px solid var(--cyan-main);
+            border-radius: 4px;
+            padding: 7px 10px;
+        }
+
+        .tele-item.gold-accent {
+            border-left-color: var(--gold-kuat);
+        }
+
+        .tele-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .tele-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #terminal-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        #terminal-body {
+            flex: 1;
+            padding: 14px 16px;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: #d8ecff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
         .log-entry {
             opacity: 0;
-            animation: fadeInLog 0.3s ease-out forwards;
-            display: flex;
-            align-items: center;
-            letter-spacing: 1px;
+            animation: slideLog 0.25s ease-out forwards;
+            word-break: break-word;
         }
 
         .log-entry::before {
-            content: "◆ [KUAT-NET] ";
-            color: var(--accent-gold);
-            margin-right: 12px;
+            content: "▸ [KDY-NET] ";
+            color: var(--gold-kuat);
             font-weight: bold;
         }
 
-        @keyframes fadeInLog {
-            from { transform: translateY(6px); opacity: 0; }
-            to { transform: translateY(0); opacity: 0.95; }
+        @keyframes slideLog {
+            from { transform: translateX(-6px); opacity: 0; }
+            to   { transform: translateX(0); opacity: 0.95; }
         }
 
-        #line {
-            animation: blink 0.8s infinite;
-            color: var(--accent-bright);
-            font-weight: bold;
+        .cursor-line {
+            margin-top: 4px;
+            color: var(--cyan-main);
+        }
+
+        #cursor {
+            animation: blink 0.85s infinite;
         }
 
         @keyframes blink {
@@ -262,70 +335,221 @@
             50% { opacity: 0; }
         }
 
-        /* BAS DE PAGE (BARRE DE DÉPLOIEMENT) */
-        .hud-footer {
-            border-top: 2px solid var(--border-color);
-            padding-top: 25px;
+        /* =========================================================
+           COLONNE DROITE : GRAND ÉCRAN "JOURNAL DE R2"
+        ========================================================= */
+        #r2-journal-panel {
             display: flex;
             flex-direction: column;
+            min-height: 0;
+            border-color: var(--gold-dim);
+        }
+
+        .r2-topbar {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            background: linear-gradient(90deg, rgba(16, 28, 46, 0.98) 0%, rgba(11, 20, 34, 0.98) 100%);
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--gold-dim);
+            flex-shrink: 0;
+        }
+
+        .r2-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .r2-badge {
+            background: rgba(245, 180, 45, 0.16);
+            border: 1px solid var(--gold-kuat);
+            color: var(--gold-kuat);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .r2-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+        }
+
+        .r2-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--cyan-bright);
+        }
+
+        .r2-nav-btn {
+            background: rgba(0, 210, 255, 0.12);
+            border: 1px solid var(--cyan-dim);
+            color: var(--text-main);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .r2-nav-btn:hover {
+            background: rgba(0, 210, 255, 0.28);
+            border-color: var(--cyan-main);
+        }
+
+        /* Barre de temps d'affichage de l'image R2 */
+        .r2-timer-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(6, 11, 18, 0.9);
+            flex-shrink: 0;
+        }
+
+        #r2-timer-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cyan-main), var(--gold-kuat));
+            transition: width 0.25s linear;
+        }
+
+        /* Zone d'affichage de l'image du Journal de R2 (Grand format lisible) */
+        .r2-viewport {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            background: radial-gradient(circle at center, rgba(13, 25, 42, 0.85) 0%, rgba(5, 10, 17, 0.98) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        #r2-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 210, 255, 0.35);
+            box-shadow: 0 0 28px rgba(0, 0, 0, 0.85), 0 0 18px rgba(0, 210, 255, 0.14);
+            transition: opacity 0.35s ease;
+        }
+
+        /* Message affiché si aucune image n'est encore chargée */
+        #r2-fallback {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            border: 1px dashed var(--gold-dim);
+            border-radius: 6px;
+            background: rgba(10, 18, 30, 0.7);
+            max-width: 520px;
+        }
+
+        #r2-fallback h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-kuat);
+            font-size: 16px;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        #r2-fallback p {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .r2-footer-caption {
+            background: rgba(7, 13, 21, 0.94);
+            border-top: 1px solid rgba(0, 185, 235, 0.22);
+            padding: 7px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        #r2-caption-text {
+            color: var(--text-main);
+        }
+
+        /* =========================================================
+           PIED DE PAGE : BARRE DE PROGRESSION
+        ========================================================= */
+        .hud-footer {
+            background: var(--bg-header);
+            border-top: 2px solid var(--cyan-dim);
+            padding: 12px 24px;
+            flex-shrink: 0;
         }
 
         #status-container {
-            width: 100%;
-            max-width: 800px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
+            align-items: center;
+            margin-bottom: 8px;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #bfa6d9;
+            font-size: 13px;
+            letter-spacing: 1.5px;
         }
 
         #status {
-            color: #ffffff;
-            font-weight: 600;
+            color: var(--text-main);
         }
 
         #counter {
-            color: var(--accent-gold);
-            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-kuat);
+            font-weight: 800;
+            font-size: 14px;
         }
 
         #progress-container {
             width: 100%;
-            max-width: 800px;
-            height: 16px;
-            background: rgba(8, 4, 15, 0.95);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            overflow: hidden;
+            height: 14px;
+            background: rgba(5, 9, 15, 0.95);
+            border: 1px solid var(--cyan-dim);
+            border-radius: 3px;
             padding: 2px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
         }
 
         #progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #581c87 0%, var(--accent-main) 50%, var(--accent-bright) 85%, var(--accent-gold) 100%);
-            border-radius: 1px;
-            box-shadow: 0 0 14px var(--accent-glow);
-            transition: width 0.3s ease-out;
+            background: linear-gradient(90deg, #006699 0%, var(--cyan-main) 60%, var(--gold-kuat) 100%);
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.55);
+            transition: width 0.25s ease-out;
         }
 
-        /* META DONNÉES DE L'EMPIRE DE WINDU */
         .hud-meta {
-            width: 100%;
             display: flex;
             justify-content: space-between;
-            margin-top: 25px;
+            margin-top: 8px;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 12px;
-            color: #8b68ab;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
         }
     </style>
 </head>
@@ -333,49 +557,112 @@
 <body>
 
 <div id="overlay"></div>
-<div id="ambient-glow"></div>
+<div id="ambient-vignette"></div>
 
 <div id="main-hud">
 
-    <!-- En-tête L'Empire de Windu -->
-    <div class="hud-header tactical-border">
+    <!-- EN-TÊTE IMPÉRIAL KUAT -->
+    <header class="hud-header datapad-box">
         <div class="header-left">
-            <img id="logo" src="logo.png" alt="Insigne Empire de Windu">
-            <div id="title-container">
+            <img id="logo" src="logo.png" alt="Insigne Empire de Kuat" onerror="this.style.display='none'">
+            <div>
                 <div id="title">L'EMPIRE DE KUAT</div>
-                <div id="subtitle">FLOTTE AQUIS 7E ARMEE • CENTRE TACTIQUE SUPRÊME</div>
+                <div id="subtitle"><span class="pulse-dot"></span> FLOTTE AQUIS 7E ARMÉE • TERMINAL DATAPAD HOLONET</div>
             </div>
         </div>
         <div class="header-right">
-            AFFILIATION : <span class="highlight-gold">CONSEIL SOUVERAIN DE KUAT</span><br>
-            STATUT DES TROUPES : <span class="highlight-text">SYNCHRONISATION FLOTTE AQUIS 7E ARMEE EN COURS</span><br>
-            DISCORD : <a href="https://discord.gg/gP6PTu6hmz" target="_blank" class="discord-link">discord.gg/gP6PTu6hmz</a>
+            AFFILIATION : <span class="hl-gold">CONSEIL SOUVERAIN DE KUAT</span><br>
+            LIAISON : <span class="hl-cyan">SYNCHRONISATION FLOTTE EN COURS</span><br>
+            CANAL RADIO : <span class="hl-gold">discord.gg/gP6PTu6hmz</span>
         </div>
-    </div>
+    </header>
 
-    <!-- Zone Centrale (Registre Holonet Impérial) -->
-    <div class="hud-center">
-        <div id="terminal" class="tactical-border">
-            <div id="log"></div>
-            <span id="line">█</span>
-        </div>
-    </div>
+    <!-- ESPACE DE TRAVAIL CENTRAL : CONSOLE + JOURNAL DE R2 -->
+    <main class="hud-workspace">
 
-    <!-- Barre de Progression & Ordres de Déploiement -->
-    <div class="hud-footer">
+        <!-- COLONNE GAUCHE : TÉLÉMÉTRIE & LOGS -->
+        <section id="terminal-panel" class="datapad-box">
+            <div class="panel-topbar">
+                <span class="tag-gold">// CONSOLE DE LIAISON HOLONET</span>
+                <span class="tag-cyan">CRYPTAGE KDY-9</span>
+            </div>
+
+            <div class="telemetry-grid">
+                <div class="tele-item gold-accent">
+                    <div class="tele-label">SECTEUR / CARTE</div>
+                    <div class="tele-val" id="info-map">CHARGEMENT...</div>
+                </div>
+                <div class="tele-item">
+                    <div class="tele-label">CAPACITÉ FLOTTE</div>
+                    <div class="tele-val" id="info-slots">--- SLOTS</div>
+                </div>
+                <div class="tele-item">
+                    <div class="tele-label">PROTOCOLE</div>
+                    <div class="tele-val" id="info-gamemode">STARWARS RP</div>
+                </div>
+                <div class="tele-item gold-accent">
+                    <div class="tele-label">STATUT AUDIO</div>
+                    <div class="tele-val" id="info-audio">CANAL ACTIF</div>
+                </div>
+            </div>
+
+            <div id="terminal-body">
+                <div id="log"></div>
+                <div class="cursor-line">&gt; EN ATTENTE DE PAQUETS HOLONET <span id="cursor">█</span></div>
+            </div>
+        </section>
+
+        <!-- COLONNE DROITE : GRAND ÉCRAN JOURNAL DE R2 -->
+        <section id="r2-journal-panel" class="datapad-box">
+            <div class="r2-topbar">
+                <div class="r2-title-group">
+                    <span class="r2-badge">ARCHIVE DROID</span>
+                    <span class="r2-heading">JOURNAL DE R2 // RAPPORT DE CAMPAGNE</span>
+                </div>
+                <div class="r2-meta">
+                    <span id="r2-page-indicator">ENTRÉE 01 / 01</span>
+                    <button class="r2-nav-btn" onclick="prevR2Entry()">◄ PRÉC.</button>
+                    <button class="r2-nav-btn" onclick="nextR2Entry()">SUIV. ►</button>
+                </div>
+            </div>
+
+            <div class="r2-timer-track">
+                <div id="r2-timer-bar"></div>
+            </div>
+
+            <div class="r2-viewport">
+                <img id="r2-image" src="" alt="Journal de R2">
+                <div id="r2-fallback">
+                    <h3>ARCHIVE MÉMOIRE R2-D2 EN ATTENTE</h3>
+                    <p>
+                        Place ton image dans le dossier du loading screen (ex: <strong>journal_r2_1.png</strong>)<br>
+                        et renseigne son nom dans la liste <strong>R2_JOURNAL_ENTRIES</strong> du fichier HTML.
+                    </p>
+                </div>
+            </div>
+
+            <div class="r2-footer-caption">
+                <span id="r2-caption-text">TRANSMISSION MÉMOIRE ASTROMECH — LECTURE HAUTE DÉFINITION</span>
+                <span class="hl-gold">DATAPAD IMPÉRIAL // ARCHIVE OFFICIELLE</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIED DE PAGE : BARRE DE CHARGEMENT -->
+    <footer class="hud-footer datapad-box">
         <div id="status-container">
-            <span id="status">Initialisation du réseau tactique améthyste...</span>
+            <span id="status">Initialisation du terminal tactique Kuat...</span>
             <span id="counter">0%</span>
         </div>
         <div id="progress-container">
             <div id="progress"></div>
         </div>
-        
         <div class="hud-meta">
             <div>ACCÈS IMPÉRIAL : CANAL CRYPTÉ CLASSIFIÉ HAOT</div>
-            <div>FREQUENCE HOLONET : 187.9 MHZ - SECTEUR PRIVILÉGIÉ</div>
+            <div>FRÉQUENCE HOLONET : 187.9 MHZ • SECTEUR KUAT</div>
         </div>
-    </div>
+    </footer>
 
 </div>
 
@@ -384,6 +671,81 @@
 </audio>
 
 <script>
+    /* =========================================================================
+       CONFIGURATION DU "JOURNAL DE R2"
+       Ajoute ici autant d'images que tu le souhaites (fichiers locaux ou liens URL)
+       ========================================================================= */
+    const R2_JOURNAL_ENTRIES = [
+    { image: "journal_r2_1.png", caption: "ENTRÉE #01 — RAPPORT DE LA FLOTTE" },
+    { image: "journal_r2_2.png", caption: "ENTRÉE #02 — SITUATION AU CHANTIER NAVAL" }
+];
+
+    const R2_SLIDE_DURATION = 12000; // Durée d'affichage par image en ms (12 secondes)
+
+    let r2Index = 0;
+    let r2Elapsed = 0;
+
+    const r2Img = document.getElementById("r2-image");
+    const r2Fallback = document.getElementById("r2-fallback");
+    const r2Caption = document.getElementById("r2-caption-text");
+    const r2Indicator = document.getElementById("r2-page-indicator");
+    const r2TimerBar = document.getElementById("r2-timer-bar");
+
+    r2Img.onerror = function() {
+        r2Img.style.display = "none";
+        r2Fallback.style.display = "flex";
+    };
+
+    r2Img.onload = function() {
+        r2Fallback.style.display = "none";
+        r2Img.style.display = "block";
+        r2Img.style.opacity = "1";
+    };
+
+    function showR2Entry(idx) {
+        if (!R2_JOURNAL_ENTRIES || R2_JOURNAL_ENTRIES.length === 0) return;
+        r2Index = (idx + R2_JOURNAL_ENTRIES.length) % R2_JOURNAL_ENTRIES.length;
+        r2Elapsed = 0;
+
+        const entry = R2_JOURNAL_ENTRIES[r2Index];
+        r2Img.style.opacity = "0.25";
+        r2Img.src = entry.image;
+        r2Caption.innerText = entry.caption || "TRANSMISSION MÉMOIRE ASTROMECH";
+
+        const curStr = String(r2Index + 1).padStart(2, "0");
+        const totStr = String(R2_JOURNAL_ENTRIES.length).padStart(2, "0");
+        r2Indicator.innerText = `ENTRÉE ${curStr} / ${totStr}`;
+    }
+
+    function nextR2Entry() {
+        showR2Entry(r2Index + 1);
+    }
+
+    function prevR2Entry() {
+        showR2Entry(r2Index - 1);
+    }
+
+    // Lancement initial du Journal de R2
+    showR2Entry(0);
+
+    // Rotation automatique si plusieurs images sont configurées
+    setInterval(() => {
+        if (R2_JOURNAL_ENTRIES.length > 1) {
+            r2Elapsed += 250;
+            const pct = Math.min((r2Elapsed / R2_SLIDE_DURATION) * 100, 100);
+            r2TimerBar.style.width = pct + "%";
+
+            if (r2Elapsed >= R2_SLIDE_DURATION) {
+                nextR2Entry();
+            }
+        } else {
+            r2TimerBar.style.width = "100%";
+        }
+    }, 250);
+
+    /* =========================================================================
+       SYSTÈME DE LOGS & INTÉGRATION GARRY'S MOD
+       ========================================================================= */
     const log = document.getElementById("log");
     const progress = document.getElementById("progress");
     const status = document.getElementById("status");
@@ -394,19 +756,15 @@
     let totalFiles = 100;
     let neededFiles = 0;
 
-    // Messages immersifs adaptés à L'Empire de Windu & la 187ème Légion
     const messages = [
-        "Établissement de la liaison prioritaire avec le Commandement...",
-        "Authentification des identifiants...",
+        "Établissement de la liaison prioritaire avec le Commandement Kuat...",
+        "Authentification des identifiants Holonet...",
         "Chargement des directives impériales et règles d'engagement...",
-        "Mise à jour des armures améthyste et systèmes de ciblage...",
-        "Synchronisation des récepteurs Vaapad et balises Holonet...",
-        "Analyse de la chaîne de commandement du Conseil Souverain...",
-        "Calibration de l'équipement lourd et des blasters DC-15...",
-        "Vérification des protocoles de sécurité du secteur impérial...",
-        "Validation de l'affectation de l'escouade par le Général...",
-        "Préparation des navettes de transport pour la zone d'opération...",
-        "Réseau Holonet stabilisé. Prêt pour la suprématie de l'Empire !"
+        "Synchronisation des archives mémoire de l'unité R2...",
+        "Calibration de l'équipement lourd et des transmissions radio...",
+        "Vérification des protocoles de sécurité du secteur...",
+        "Validation de l'affectation de l'escouade...",
+        "Réseau Holonet stabilisé. Prêt pour le déploiement !"
     ];
 
     function addLine(text) {
@@ -414,46 +772,35 @@
         entry.className = "log-entry";
         entry.innerText = text;
         log.appendChild(entry);
-        
-        const terminal = document.getElementById("terminal");
-        terminal.scrollTop = terminal.scrollHeight;
-        
-        while (log.childNodes.length > 8) {
+
+        while (log.childNodes.length > 9) {
             log.removeChild(log.firstChild);
         }
     }
 
-    function load() {
-        if (percent < 100) {
-            percent += Math.floor(Math.random() * 6) + 2;
-            if (percent > 100) percent = 100;
-
-            updateProgress(percent);
-
-            if (currentMsgIndex < messages.length && percent > (currentMsgIndex * (100 / messages.length))) {
-                addLine(messages[currentMsgIndex]);
-                status.innerText = messages[currentMsgIndex];
-                currentMsgIndex++;
-            }
-
-            setTimeout(load, 500);
-        } else {
-            progress.style.width = "100%";
-            counter.innerText = "100%";
-            status.innerText = "Déploiement immédiat sur le théâtre d'opérations...";
-            addLine("Décret exécuté : POUR L'EMPIRE DE KUAT !");
-        }
-    }
-
     function updateProgress(percentage) {
-        progress.style.width = percentage + "%";
-        counter.innerText = Math.round(percentage) + "%";
+        const clamped = Math.max(0, Math.min(100, Math.round(percentage)));
+        progress.style.width = clamped + "%";
+        counter.innerText = clamped + "%";
     }
 
-    // Intégrations Garry's Mod
+    // Fonction native appelée automatiquement par Garry's Mod au début de la connexion
+    function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+        if (mapname) {
+            document.getElementById("info-map").innerText = mapname.toUpperCase();
+        }
+        if (maxplayers) {
+            document.getElementById("info-slots").innerText = maxplayers + " EFFECTIFS";
+        }
+        if (gamemode) {
+            document.getElementById("info-gamemode").innerText = gamemode.toUpperCase();
+        }
+        addLine("Connexion au secteur : " + (mapname || "Inconnu"));
+    }
+
     function SetFilesNeeded(needed) {
         neededFiles = needed;
-        addLine("Mise à jour Holonet : " + needed + " modules tactiques requis.");
+        addLine("Modules tactiques à synchroniser : " + needed);
     }
 
     function SetFilesTotal(total) {
@@ -462,10 +809,10 @@
 
     function DownloadingFile(filename) {
         status.innerText = "Téléchargement : " + filename;
-        addLine("Réception du fichier : " + filename);
-        
-        if (neededFiles > 0) {
-            let filesDownloaded = totalFiles - neededFiles;
+        addLine("Réception : " + filename);
+
+        if (neededFiles > 0 && totalFiles > 0) {
+            let filesDownloaded = Math.max(0, totalFiles - neededFiles);
             let dynamicPercent = (filesDownloaded / totalFiles) * 100;
             updateProgress(Math.min(dynamicPercent, 99));
         }
@@ -473,24 +820,52 @@
 
     function SetStatusChanged(statusText) {
         let frenchStatus = statusText;
-        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des données d'armement impérial...";
-        else if (statusText === "Mounting Addons") frenchStatus = "Configuration des équipements 187th...";
-        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres de l'Empire terminée.";
-        
+        if (statusText === "Getting Addon Info") frenchStatus = "Analyse des modules d'armement impérial...";
+        else if (statusText === "Mounting Addons") frenchStatus = "Montage des équipements de la flotte...";
+        else if (statusText === "Workshop Complete") frenchStatus = "Vérification des registres Workshop terminée.";
+        else if (statusText === "Sending client info") frenchStatus = "Transmission des identifiants opérateur...";
+
         status.innerText = frenchStatus;
         addLine(frenchStatus);
+
+        if (statusText === "Sending client info") {
+            updateProgress(100);
+        }
+    }
+
+    // Simulation automatique uniquement si ouvert hors Garry's Mod (ex: navigateur web)
+    function simulateLoad() {
+        if (percent < 100) {
+            percent += Math.floor(Math.random() * 6) + 3;
+            if (percent > 100) percent = 100;
+            updateProgress(percent);
+
+            if (currentMsgIndex < messages.length && percent >= (currentMsgIndex * (100 / messages.length))) {
+                addLine(messages[currentMsgIndex]);
+                status.innerText = messages[currentMsgIndex];
+                currentMsgIndex++;
+            }
+            setTimeout(simulateLoad, 550);
+        } else {
+            status.innerText = "Déploiement immédiat sur le théâtre d'opérations...";
+            addLine("Décret exécuté : POUR L'EMPIRE DE KUAT !");
+        }
     }
 
     const music = document.getElementById("music");
     setTimeout(() => {
         music.volume = 0.08;
-        music.play().catch(() => {
-            console.log("Lecture audio en attente d'interaction utilisateur.");
+        music.play().then(() => {
+            document.getElementById("info-audio").innerText = "AUDIO ACTIF";
+        }).catch(() => {
+            document.getElementById("info-audio").innerText = "EN VEILLE";
         });
-    }, 1000);
+    }, 800);
 
     if (!navigator.userAgent.includes("GMod")) {
-        setTimeout(load, 500);
+        document.getElementById("info-map").innerText = "RP_KUAT_SHIPYARDS";
+        document.getElementById("info-slots").innerText = "64 EFFECTIFS";
+        setTimeout(simulateLoad, 400);
     }
 </script>
 
